@@ -54,3 +54,7 @@ def get_repo():
     #TODO jsonify   
 
 
+if __name__ == "__main__":
+    res = get_repo()
+    print(res)
+

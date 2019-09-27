@@ -1,1 +1,1 @@
-from . import get_commit
+from get_commit import *

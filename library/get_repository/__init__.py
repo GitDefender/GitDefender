@@ -1,1 +1,1 @@
-from . import get_repository
+from get_repository import *

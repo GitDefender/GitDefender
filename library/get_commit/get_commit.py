@@ -32,7 +32,18 @@ def get_commit(data):
             commits_history = []
             )
 
-if __name__ == "__main__":
-    get_commit()
+# "commits_url": "https://api.github.com/repos/roharon/HUFormation-kakao/commits{/sha}",
 
-#"commits_url": "https://api.github.com/repos/roharon/HUFormation-kakao/commits{/sha}",
+
+if __name__ == "__main__":
+    json_object = {
+        'status': 200,
+        'repository_list':
+            [{'name': '006975',
+              'clone_url': 'https://github.com/roharon/006975.git',
+              'commits_url': 'https://api.github.com/repos/roharon/006975/commits'
+
+            }]}
+
+    res = get_commit(json_object['repository_list'][0])
+    print(res)
