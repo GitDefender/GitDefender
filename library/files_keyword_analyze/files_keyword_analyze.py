@@ -8,17 +8,18 @@ def files_keyword_analyze(files_list):
     
     def scan_file(source_code):
         with open(source_code, 'r') as f:
-            scan_data = re.finditer('App', f.read())
+            scan_data = re.finditer('source_code', f.read())
             #TODO iter 할때 json화시켜서 리턴시키기
         
-        data = dict()
+        data = []
 
         for iter_data in scan_data:
-            data = dict(
-                keyword= iter_data.group(),
-                start=iter_data.start(),
-                end=iter_data.end()
-            )
+            data.append(dict(
+                file_name = source_code,
+                keyword = iter_data.group(),
+                start = iter_data.start(),
+                end = iter_data.end()
+            ))
         return data
     
     result = list(map(scan_file, files_list))
@@ -26,9 +27,8 @@ def files_keyword_analyze(files_list):
 
 if __name__ == "__main__":
     data = [
-        '/home/aaronroh/projects/project-Oechul-front/yarn.lock',
-        '/home/aaronroh/projects/project-Oechul-front/src/App.js',
-        '/home/aaronroh/projects/project-Oechul-front/src/index.js',
+        '/home/aaronroh/projects/crawltool/library/files_keyword_analyze/files_keyword_analyze.py',
+        '/home/aaronroh/projects/crawltool/library/files_keyword_analyze/__init__.py'
     ]
 
     res = files_keyword_analyze(data)
