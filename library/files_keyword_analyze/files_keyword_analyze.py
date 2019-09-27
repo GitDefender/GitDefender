@@ -8,9 +8,8 @@ def files_keyword_analyze(files_list):
     
     def scan_file(source_code):
         with open(source_code, 'r') as f:
-            scan_data = re.finditer('source_code', f.read())
+            scan_data = re.finditer('rule_set', f.read())
             #TODO iter 할때 json화시켜서 리턴시키기
-        
         data = []
 
         for iter_data in scan_data:
