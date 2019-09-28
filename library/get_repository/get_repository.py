@@ -6,7 +6,7 @@ def get_repo():
     return: repository_list
     """
     GITHUB_API_URL = "https://api.github.com"
-    GITHUB_API_TOKEN = "token 16395dbb7594f1bb54ae89796283e02170bb8613"
+    GITHUB_API_TOKEN = "token <YOUR TOKEN>"
     REPO_SEARCH_URL = "/user/repos"
     # 따로 파일 만들어서 관리할 것
 
@@ -17,8 +17,8 @@ def get_repo():
                 }
 
     params = {
-        'client_id':'d220f1ce704075b77610',
-        'client_secret': 'a811f2c99f77d0632404aaae6f0058dff3b7c0b5'
+        'client_id':'<CLIENT ID>',
+        'client_secret': '<CLIENT SECRET>'
     }
 
     res = requests.get(GITHUB_API_URL + REPO_SEARCH_URL , headers=headers, params=params)
