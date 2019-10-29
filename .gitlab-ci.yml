@@ -1,0 +1,33 @@
+stages:
+  - test
+  - build
+  - deploy
+
+test:
+  stage: test
+  script: 
+    echo "-test server running-"
+    apt-get install python3 python3-pip
+    pip3 install -r ./backend/requirements.txt
+    python3 manage.py makemigrations
+
+build:
+  stage: build
+  script:
+    - echo "-build server running-"
+    - apt-get install python3 python3-pip
+    - pip3 install -r ./backend/requirements.txt
+    - python3 manage.py makemigrations
+
+deploy_staging:
+  stage: deploy
+  script:
+    - echo "-build server running-"
+    - apt-get install python3 python3-pip
+    - pip3 install -r ./backend/requirements.txt
+    - python3 manage.py makemigrations
+  environment:
+    name: staging
+    url: https://gitdefender.com
+  only:
+  - master
