@@ -7,7 +7,8 @@ from rest_framework.response import Response
 from .serializers import (
     CreateUserSerializer,
     UserSerializer,
-    LoginUserSerializer
+    LoginUserSerializer,
+    GithubSerializer
 )
 from knox.models import AuthToken
 from knox.auth import TokenAuthentication
@@ -84,6 +85,29 @@ class LogoutView(generics.GenericAPIView):
                              request=request, user=request.user)
         body = {"message": "logout successful"}
         return Response(body, status=status.HTTP_200_OK)
+
+class GithubCallbackAPI(generics.UpdateAPIView):
+    authentication_classes = (
+        TokenAuthentication,
+    )
+    permission_classes = (
+        IsAuthenticated,
+    )
+    serializer_class = GithubSerializer
+
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.github_token = request.data.get('token')
+        instance.save()
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        #TODO callback시 받는 값을 user의 github_token에 저장
+        return Response(serializer.data)
+
+
 
 @csrf_protect
 def oauth2(request):

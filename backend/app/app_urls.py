@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from .views import oauth2, RegistrationAPI, LoginAPI, UserAPI, LogoutView
+from .views import oauth2, RegistrationAPI, LoginAPI, UserAPI, LogoutView, GithubCallbackAPI
 
 
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
     path('auth/user/', UserAPI.as_view(), name='user'),
     path('auth/login/', LoginAPI.as_view(), name='login'),
     path('auth/logout/', LogoutView.as_view(), name='logout'),
+    path('auth/github_callback/', GithubCallbackAPI.as_view(), name='github_callback')
 ]

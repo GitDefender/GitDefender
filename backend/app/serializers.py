@@ -1,10 +1,11 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from .models import GdfUser
 
 class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = GdfUser
         fields = ("id", "username", "email", "password")
         extra_kwargs = {"password": {"write_only": True}}
 
@@ -29,3 +30,6 @@ class LoginUserSerializer(serializers.Serializer):
         if user and user.is_active:
             return user
         raise serializers.ValidationError("Unable to log in with provided credentials")
+
+class GithubSerializer(serializers.Serializer):
+    token = serializers.CharField()
