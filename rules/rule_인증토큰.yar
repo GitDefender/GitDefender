@@ -11,4 +11,3 @@ rule _Ruby_on_Rails
         $_Ruby_on_Rails0
 
 }
-
