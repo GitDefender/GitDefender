@@ -46,7 +46,7 @@ rule Salesforce
 {
 
     meta:
-        description0 = "Firefox는 데이터를 Firefox 프로필 폴더의 logins.json 파일에 저장한다."
+        description0 = "로그인을 위한 Salesforce 사용자 이름."
 
     strings:
         $Salesforce0 = "SF_USERNAME salesforce"
@@ -55,4 +55,3 @@ rule Salesforce
         $Salesforce0
 
 }
-

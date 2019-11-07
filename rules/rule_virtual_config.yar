@@ -2,7 +2,7 @@ rule docker
 {
 
     meta:
-        description0 = "git 설정에대한 username, password가 있음"
+        description0 = "Docker configuration file"
 
     strings:
         $docker0 = /^\.?dockercfg$/
@@ -11,4 +11,3 @@ rule docker
         $docker0
 
 }
-
