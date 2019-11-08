@@ -1,14 +1,14 @@
-rule Git-credential-store_helper_
+rule Git_credential_store_helper_ : need_config
 {
 
     meta:
         description0 = "repo scanner :  GnuCash database file"
 
     strings:
-        $Git-credential-store_helper_0 = /^\.?git-credentials$/
+        $Git_credential_store_helper_0 = /^\.?git-credentials$/
 
     condition:
-        $Git-credential-store_helper_0
+        $Git_credential_store_helper_0
 
 }
 

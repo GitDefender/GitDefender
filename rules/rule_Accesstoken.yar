@@ -98,14 +98,14 @@ rule Hub
 
 }
 
-rule Slack_token
+rule Slack_token : need_config
 {
 
     meta:
         description0 = "hub 파일 안에서 oauth_token 키워드로 관련 정보를 추출"
 
     strings:
-        $Slack_token0 = /(xox[p|b|o|a]-[0-9]{12}-[0-9]{12}-[0-9]{12}-[a-z0-9]{32})/
+        $Slack_token0 = /xox[p|b|o|a][0-9]{12}[0-9]{12}[0-9]{12}[a-z0-9]{32}/
 
     condition:
         $Slack_token0

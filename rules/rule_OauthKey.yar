@@ -1,4 +1,6 @@
-rule Google_Oauth
+#all_need_config
+
+rule Google_Oauth : need_config
 {
 
     meta:
@@ -7,7 +9,7 @@ rule Google_Oauth
 
     strings:
         $Google_Oauth0 = /"(\"client_secret\":\"[a-zA-Z0-9-_]{24}\")"/
-        $Google_Oauth1 = /(?i)(google|gcp|auth)(.{0,20})?['"][0-9]+-[0-9a-z_]{32}\.apps\.googleusercontent\.com['"]/
+        $Google_Oauth1 = /(i)(google|gcp|auth)(.{0,20})?['"][0-9]+-[0-9a-z_]{32}\.apps\.googleusercontent\.com['"]/
 
     condition:
         $Google_Oauth0 or $Google_Oauth1
@@ -28,14 +30,14 @@ rule Facebook_Oauth
 
 }
 
-rule Github_Oauth
+rule Github_Oauth : need_config
 {
 
     meta:
         description0 = "35,44 길이에 해당하는 ? 정보를 찾긴 어려우나 인증 요청을 보낼때 사용하는 정보로 추정"
 
     strings:
-        $Github_Oauth0 = /[g|G][i|I][t|T][h|H][u|U][b|B].{0,30}['\"\\s][0-9a-zA-Z]{35,40}['\"\\s/
+        $Github_Oauth0 = /[0-9a-zA-Z]{35,40}/
 
     condition:
         $Github_Oauth0

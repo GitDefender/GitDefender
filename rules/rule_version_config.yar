@@ -1,3 +1,5 @@
+#all_need_config
+
 rule Git
 {
 
@@ -12,16 +14,16 @@ rule Git
 
 }
 
-rule GitHub_Hub_command-line_client__GitHub_API_access_token
+rule GitHub_Hub_command_line_client__GitHub_API_access_token
 {
 
     meta:
-        description0 = ""GitHub Hub CLI 클라이언트 구성 파일,GitHub API 액세스 토큰을 포함할 수 있음 port, userid, pwd 등 도 노출""
+        description0 = "GitHub Hub CLI 클라이언트 구성 파일,GitHub API 액세스 토큰을 포함할 수 있음 port, userid, pwd 등 도 노출"
 
     strings:
-        $GitHub_Hub_command-line_client__GitHub_API_access_token0 = "config/hub$"
+        $GitHub_Hub_command_line_client__GitHub_API_access_token0 = "config/hub$"
 
     condition:
-        $GitHub_Hub_command-line_client__GitHub_API_access_token0
+        $GitHub_Hub_command_line_client__GitHub_API_access_token0
 
 }

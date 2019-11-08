@@ -8,8 +8,8 @@ rule Private_SSH_key
         description3 = "공개키"
 
     strings:
-        $Private_SSH_key0 = /\\A.*_rsa\\z ^.*_rsa$/
-        $Private_SSH_key1 = /\\A.*_dsa\\z ^.*_dsa$/
+        $Private_SSH_key0 = /\\A.*_rsa/
+        $Private_SSH_key1 = /\\A.*_dsa/
         $Private_SSH_key2 = /\\A.*_ed25519\\z/
         $Private_SSH_key3 = /\\A.*_ecdsa\\z/
 
@@ -29,21 +29,21 @@ rule Potential_cryptographic__private_key
     strings:
         $Potential_cryptographic__private_key0 = "pem"
         $Potential_cryptographic__private_key1 = "ppk"
-        $Potential_cryptographic__private_key2 = /\\Akey(pair)?\\z ^key(pair)?$/
+        $Potential_cryptographic__private_key2 = /\\Akey(pair)?/
 
     condition:
         $Potential_cryptographic__private_key0 or $Potential_cryptographic__private_key1 or $Potential_cryptographic__private_key2
 
 }
 
-rule Chef_private_key
+rule Chef_private_key : need_config
 {
 
     meta:
         description0 = "Chef 서버에 대한 인증에 사용할 수 있음(개인키파일)"
 
     strings:
-        $Chef_private_key0 = /\.?chef/(.*)\.pem$/
+        $Chef_private_key0 = /\.?chef/
 
     condition:
         $Chef_private_key0
@@ -126,7 +126,7 @@ rule EC_private_key
 
 }
 
-rule Generic_secret_key
+rule Generic_secret_key : need_config
 {
 
     meta:
@@ -135,7 +135,7 @@ rule Generic_secret_key
 
     strings:
         $Generic_secret_key0 = /"[s|S][e|E][c|C][r|R][e|E][t|T].{0,30}['\"\\s][0-9a-zA-Z]{32,45}['\"\\s]/
-        $Generic_secret_key1 = /(?i)secret(.{0,20})?['|"][0-9a-zA-Z]{32,45}['|"]/
+        $Generic_secret_key1 = /(i)secret(.{0,20})?['|"][0-9a-zA-Z]{32,45}['|"]/
 
     condition:
         $Generic_secret_key0 or $Generic_secret_key1
@@ -198,16 +198,16 @@ rule SSH_OPENSSH
 
 }
 
-rule Rails__encrypted_credentials_key_암호화된_인증서_키
+rule Rails__encrypted_credentials_key : need_config
 {
 
     meta:
         description0 = "인증서 관련 키 파일"
 
     strings:
-        $Rails__encrypted_credentials_key_암호화된_인증서_키0 = /\\.?config/master\\.key\\z/
+        $Rails__encrypted_credentials_key0 = /\\.?config/
 
     condition:
-        $Rails__encrypted_credentials_key_암호화된_인증서_키0
+        $Rails__encrypted_credentials_key0
 
 }

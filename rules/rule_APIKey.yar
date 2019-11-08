@@ -1,14 +1,14 @@
-rule Recon-ng
+rule Recon_ng : need_config
 {
 
     meta:
         description0 = "kail 에서 쓰는 web scanning? 툴이라고 하는데 거기에 쓰는 키값"
 
     strings:
-        $Recon-ng0 = /\\.?recon-ng\\/keys\\.db\\z \.?recon-ng/keys\.db$/
+        $Recon_ng0 = /\.recon-ng\.db/
 
     condition:
-        $Recon-ng0
+        $Recon_ng0
 
 }
 
@@ -40,49 +40,49 @@ rule Picatic
 
 }
 
-rule MailGun
+rule MailGun : need_config
 {
 
     meta:
         description0 = "MailGun API key Api를 이용하여 이메일을 보내고 받을 수 있는 서비스로 메일의 상태에 따른 WebHook을 보낼 수 있는것도 특징이다. 가격도 인당이 아닌 메일 건당으로 측정되고 개인이 사용하기에는 무료"
 
     strings:
-        $MailGun0 = /(?i)(mailgun|mg)(.{0,20})?['"][0-9a-z]{32}['"]/
+        $MailGun0 = /(i)(mailgun|mg)(.{0,20})['"][0-9a-z]{32}['"]/
 
     condition:
         $MailGun0
 
 }
 
-rule Stripe_Standard
+rule Stripe_Standard : need_config
 {
 
     meta:
         description0 = "외국에서 사용하는 결제시스템 https://stripe.com/docs/connect/standard-accounts"
 
     strings:
-        $Stripe_Standard0 = /(?i)stripe(.{0,20})?['\"][sk|rk]_live_[0-9a-zA-Z]{24}/
+        $Stripe_Standard0 = /(i)stripe(.{0,20})['\"][sk|rk]_live_[0-9a-zA-Z]{24}/
 
     condition:
         $Stripe_Standard0
 
 }
 
-rule MailChimp
+rule MailChimp : need_config
 {
 
     meta:
         description0 = "마케팅 자동화 플랫폼이자 e-메일 마케팅 서비스"
 
     strings:
-        $MailChimp0 = /(?i)(mailchimp|mc)(.{0,20})?['"][0-9a-f]{32}-us[0-9]{1,2}['"]/
+        $MailChimp0 = /(i)(mailchimp|mc)(.{0,20})['"][0-9a-f]{32}-us[0-9]{1,2}['"]/
 
     condition:
         $MailChimp0
 
 }
 
-rule Heroku
+rule Heroku : need_config
 {
 
     meta:
@@ -91,7 +91,7 @@ rule Heroku
         description2 = "description does not exist"
 
     strings:
-        $Heroku0 = /(?i)heroku(.{0,20})?['"][0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}['"]/
+        $Heroku0 = /(i)heroku(.{0,20})['"][0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}['"]/
         $Heroku1 = /[h|H][e|E][r|R][o|O][k|K][u|U].{0,30}[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}/
         $Heroku2 = "HEROKU_API_KEY"
 
@@ -114,7 +114,7 @@ rule AWS_key
 
 }
 
-rule Twilio_api_key
+rule Twilio_api_key : need_config
 {
 
     meta:
@@ -122,7 +122,7 @@ rule Twilio_api_key
         description1 = "description does not exist"
 
     strings:
-        $Twilio_api_key0 = /(?i)twilio(.{0,20})?['\"][0-9a-f]{32}['\"]/
+        $Twilio_api_key0 = /(i)twilio(.{0,20})['\"][0-9a-f]{32}['\"]/
         $Twilio_api_key1 = /SK[a-z0-9]{32}/
 
     condition:
@@ -130,7 +130,7 @@ rule Twilio_api_key
 
 }
 
-rule GENERIC
+rule GENERIC : need_config
 {
 
     meta:
@@ -138,8 +138,8 @@ rule GENERIC
         description1 = "description does not exist"
 
     strings:
-        $GENERIC0 = /(?i)(api_key|apikey)(.{0,20})?['|"][0-9a-zA-Z]{32,45}['|"]/
-        $GENERIC1 = /[a|A][p|P][i|I][_]?[k|K][e|E][y|Y].{0,30}['\"\\s][0-9a-zA-Z]{32,45}['\"\\s]/
+        $GENERIC0 = /(i)(api_key|apikey)(.{0,20})['|"][0-9a-zA-Z]{32,45}['|"]/
+        $GENERIC1 = /[a|A][p|P][i|I][_][k|K][e|E][y|Y].{0,30}['\"\\s][0-9a-zA-Z]{32,45}['\"\\s]/
 
     condition:
         $GENERIC0 or $GENERIC1
@@ -160,14 +160,14 @@ rule shodan
 
 }
 
-rule Google_Cloud_Platform_API_key
+rule Google_Cloud_Platform_API_key : need_config
 {
 
     meta:
         description0 = "  https://cloud.google.com/docs/authentication/api-keys - 사용자 인증 정보를 공개적으로 노출하면 계정이 유출되어 계정에 예상치 못한 비용이 부과될 수 있다"
 
     strings:
-        $Google_Cloud_Platform_API_key0 = /(?i)(google|gcp|youtube|drive|yt)(.{0,20})?['\"][AIza[0-9a-z\\-_]{35}]['\"]/
+        $Google_Cloud_Platform_API_key0 = /(i)(google|gcp|youtube|drive|yt)(.{0,20})['\"][AIza[0-9a-z\\-_]{35}]['\"]/
 
     condition:
         $Google_Cloud_Platform_API_key0
@@ -178,7 +178,7 @@ rule dark_sky_api
 {
 
     meta:
-        description0 = "dark sky 기상정보? 와 관련된 서비스 ,일기예보에 사용되는 서비스와 관련되어보임If you're trying to use our service, you probably wanted one of these endpoints: /forecast/APIKEY/LATITUDE,LONGITUDE /forecast/APIKEY/LATITUDE,LONGITUDE,TIMESTAMP /v1/status.txt D "
+        description0 = "dark sky 기상정보 와 관련된 서비스 ,일기예보에 사용되는 서비스와 관련되어보임If you're trying to use our service, you probably wanted one of these endpoints: /forecast/APIKEY/LATITUDE,LONGITUDE /forecast/APIKEY/LATITUDE,LONGITUDE,TIMESTAMP /v1/status.txt D "
 
     strings:
         $dark_sky_api0 = "api.forecast.io"
@@ -192,7 +192,7 @@ rule AWS_MWS_key
 {
 
     meta:
-        description0 = "dark sky 기상정보? 와 관련된 서비스 ,일기예보에 사용되는 서비스와 관련되어보임If you're trying to use our service, you probably wanted one of these endpoints: /forecast/APIKEY/LATITUDE,LONGITUDE /forecast/APIKEY/LATITUDE,LONGITUDE,TIMESTAMP /v1/status.txt D "
+        description0 = "dark sky 기상정보 와 관련된 서비스 ,일기예보에 사용되는 서비스와 관련되어보임If you're trying to use our service, you probably wanted one of these endpoints: /forecast/APIKEY/LATITUDE,LONGITUDE /forecast/APIKEY/LATITUDE,LONGITUDE,TIMESTAMP /v1/status.txt D "
 
     strings:
         $AWS_MWS_key0 = /amzn\.mws\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/
