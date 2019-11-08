@@ -72,7 +72,7 @@ rule KeePass_password_manager
 {
 
     meta:
-        description0 = "여러 인증 시스템들의 ID, password를 통합관리하는 도구이다."
+        description0 = "KeePass password manager database file."
 
     strings:
         $KeePass_password_manager0 = "^kdbx?$"
