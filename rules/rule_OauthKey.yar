@@ -1,6 +1,6 @@
 #all_need_config
 
-rule Google_Oauth : need_config
+rule Google_Oauth :
 {
 
     meta:
@@ -8,8 +8,8 @@ rule Google_Oauth : need_config
         description1 = "구글 인증(auth)에 인증요청 보낼떄 사용하는 데이터들이 저장됨 ( url, client 관련정보(secret key)) json 형태로 저장"
 
     strings:
-        $Google_Oauth0 = /"(\"client_secret\":\"[a-zA-Z0-9-_]{24}\")"/
-        $Google_Oauth1 = /(i)(google|gcp|auth)(.{0,20})?['"][0-9]+-[0-9a-z_]{32}\.apps\.googleusercontent\.com['"]/
+        $Google_Oauth0 = /client_secret:[a-zA-Z0-9-_]{24}/
+        $Google_Oauth1 = /(google|gcp|auth)(.{0,20})?['"][0-9]+-[0-9a-z_]{32}\.apps\.googleusercontent\.com['"]/
 
     condition:
         $Google_Oauth0 or $Google_Oauth1
@@ -30,14 +30,14 @@ rule Facebook_Oauth
 
 }
 
-rule Github_Oauth : need_config
+rule Github_Oauth :
 {
 
     meta:
         description0 = "35,44 길이에 해당하는 ? 정보를 찾긴 어려우나 인증 요청을 보낼때 사용하는 정보로 추정"
 
     strings:
-        $Github_Oauth0 = /[0-9a-zA-Z]{35,40}/
+        $Github_Oauth0 = /[g|G][i|I][t|T][h|H][u|U][b|B].{0,30}['\"\\s][0-9a-zA-Z]{35,40}['\"\\s]/
 
     condition:
         $Github_Oauth0
