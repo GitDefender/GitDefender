@@ -2,7 +2,7 @@ rule Little_Snitch_firewall
 {
 
     meta:
-        description0 = "chef-repo 특정 구성 세부 사항을 지정하는데 사용된다.  clinet_key를 통해 클라이언트 키가 포함된 파일의 위치가 노출되며,  cookbook_email을 통한 개인의 Email,  validation_key를 통해 chef_client가 Chef 서버에 등록 될 때 사용되는 키가 포함된 파일의 위치를 알 수 있다 https://docs.chef.io/knife.html https://docs.chef.io/config_rb.html"
+        description0 = "리틀 스니치는 macOS용 호스트 기반 애플리케이션 방화벽이다. 응용프로그램을 감시하는 데 사용할 수 있으며, 고급 규칙을 통해 연결된 네트워크에 접속하는 것을 방지하거나 허용한다. 오스트리아의 확고한 목표 개발 소프트웨어 GmbH에 의해 생산되고 유지된다."
 
     strings:
         $Little_Snitch_firewall0 = "configuration.user.xpl"
