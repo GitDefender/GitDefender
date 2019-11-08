@@ -16,7 +16,7 @@ rule GNOME_Keyring_
 {
 
     meta:
-        description0 = "repo scanner :  GnuCash database file"
+        description0 = "GNOME Keyring database file"
 
     strings:
         $GNOME_Keyring_0 = "^key(store|ring)$"
