@@ -2,10 +2,10 @@ rule Shell_config
 {
 
     meta:
-        description0 = "쉘 환경설정 파일 부분"
-        description1 = "쉘 환경설정 파일 부분 "
-        description2 = "쉘 환경설정 파일 부분"
-        description3 = "쉘 환경설정 파일로서 password, API key등 각종 credential한 키가 노출되어 있을 수 있다.  C shell reouce 파일_cshrc에서 PATH, setenv 등을 설정할 수 있음. 하나의 shell이 열릴 때(window open) 마다 ~/.cshrc를 읽어 사용자의 환경을 설정한다."
+        description0 = "Shell configuration file"
+        description1 = "Shell configuration file"
+        description2 = "Shell configuration file"
+        description3 = "Shell configuration file-various credential keys such as password, API key & You can set PATH, setenv, etc. in the C shell reouce file_cshrc. Each time a shell is opened, it reads ~ / .cshrc to set the user's environment."
 
     strings:
         $Shell_config0 = "exports"
@@ -22,7 +22,7 @@ rule Shell_command_alias
 {
 
     meta:
-        description0 = "쉘 환경설정 파일로서 password, API key등 각종 credential한 키가 노출되어 있을 수 있다."
+        description0 = "Shell configuration file-various credential keys such as password, API key"
 
     strings:
         $Shell_command_alias0 = /^\.?(bash_|zsh_)?aliases$/
@@ -36,7 +36,7 @@ rule Shell_profile
 {
 
     meta:
-        description0 = "쉘 환경설정 파일로서 password, API key등 각종 credential한 키가 노출되어 있을 수 있다."
+        description0 = "Shell configuration file-various credential keys such as password, API key"
 
     strings:
         $Shell_profile0 = /^\.?(bash_|zsh_)?profile$/
@@ -50,7 +50,7 @@ rule Potential_MSBuild_publish_profile
 {
 
     meta:
-        description0 = "쉘 환경설정 파일로서 password, API key등 각종 credential한 키가 노출되어 있을 수 있다."
+        description0 = "repo - scanner : Potential MSBuild publish profile"
 
     strings:
         $Potential_MSBuild_publish_profile0 = /\\A*\\.pubxml(\\.user)?\\z/
