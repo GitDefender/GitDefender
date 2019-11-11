@@ -2,7 +2,7 @@ rule OpenVPN
 {
 
     meta:
-        description0 = "키가 들어있는 경우 가능성은 적지만 암호화를 풀수 있고, 복호화 키를 가져올수 있다면 해킹이 가능하다."
+        description0 = "OpenVPN provides flexible VPN solutions for businesses to secure all data communications and extend private network services while maintaining security."
 
     strings:
         $OpenVPN0 = "ovpn"
@@ -16,7 +16,7 @@ rule Tunnelblick
 {
 
     meta:
-        description0 = "키가 들어있는 경우 가능성은 적지만 암호화를 풀수 있고, 복호화 키를 가져올수 있다면 해킹이 가능하다."
+        description0 = "Tunnelblick is open source software that can be used to connect to any VPN network that supports OpenVPN."
 
     strings:
         $Tunnelblick0 = "tblk"
