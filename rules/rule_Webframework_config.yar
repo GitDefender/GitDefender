@@ -2,7 +2,8 @@ rule Ruby_On_Rails
 {
 
     meta:
-        description0 = "rails > 루비로 작성된 웹프레임 워크  잠재적인 데이터베이스의 configration 파일 >  데이터 베이스 자격증명 관련 정보 노출 ip, port, username,pw, mac address등 많은 정보 노출"
+        description0 = "Web framework written in ruby ​​configration file of potential database-exposing database credentials information ip, port, username, pw, mac address, etc.
+"
 
     strings:
         $Ruby_On_Rails0 = "database.yml"
@@ -16,7 +17,7 @@ rule Django
 {
 
     meta:
-        description0 = "django 프레임워크의 설정파일 secret key노출과 databases 설정정보, debug모드 on off에 대해 알 수 있음"
+        description0 = "Configuration file of django framework-reveals secret key exposure, databases configuration information, debug mode on off"
 
     strings:
         $Django0 = "settings.py"
@@ -30,7 +31,7 @@ rule Drupal
 {
 
     meta:
-        description0 = "django 프레임워크의 설정파일 secret key노출과 databases 설정정보, debug모드 on off에 대해 알 수 있음"
+        description0 = "Drupal Bulletin Database Configuration File"
 
     strings:
         $Drupal0 = "databases password"
