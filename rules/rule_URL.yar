@@ -2,8 +2,7 @@ rule mongolab
 {
 
     meta:
-        description0 = "몽고랩:몽고DB 데이터베이스를 호스팅하는 매니지드 클라우드 데이터베이스 서비스"
-
+        description0 = "Managed Cloud Database Services Hosting Mongolia DB Databases"
     strings:
         $mongolab0 = "mongolab.com"
 
@@ -16,10 +15,10 @@ rule slack_webhook
 {
 
     meta:
-        description0 = "웹후크 : 앱에서 슬랙으로 메시지를 올리는 간단한 방법, 웹후크 생성시, 메시지 텍스트와 일부 옵션이 포함된 JSON 페이로드에 대한 고유한 URL이 제공됨"
+        description0 = "Simple way to post messages with Slack in app, unique URL for JSON payload with message text and some options when creating webhook"
 
     strings:
-        $slack_webhook0 = /https://hooks.slack.com/services/T[a-zA-Z0-9_]{8}/B[a-zA-Z0-9_]{8}/[a-zA-Z0-9_]{24}/
+        $slack_webhook0 = /https:\/\/hooks.slack.com\/services\/T[a-zA-Z0-9_]{8}\/B[a-zA-Z0-9_]{8}\/[a-zA-Z0-9_]{24}/
 
     condition:
         $slack_webhook0
@@ -30,10 +29,10 @@ rule Password_in_URL
 {
 
     meta:
-        description0 = "http://username:password@example.com 은 FireFox, Chrome, Safari 에서만 작동하고, IE에서는 작동하지 않는다."
+        description0 = "http: // username: password@example.com works only on FireFox, Chrome, and Safari, not IE."
 
     strings:
-        $Password_in_URL0 = /[a-zA-Z]{3,10}://[^/\\s:@]{3,20}:[^/\\s:@]{3,20}@.{1,100}[\"'\\s]/
+        $Password_in_URL0 = /[a-zA-Z]{3,10}:\/\/[^/\\\s:@]{3,20}:[^/\\\s:@]{3,30}@.{1,100}[\"'\\\s]/
 
     condition:
         $Password_in_URL0
@@ -44,7 +43,8 @@ rule Mongo_DB
 {
 
     meta:
-        description0 = "MongoDB의 비밀번호, 포트번호 등을 알아낼 수 있음"
+        description0 = "MongoDB password, port number, etc.
+"
 
     strings:
         $Mongo_DB0 = ".mlab.com password"
@@ -58,7 +58,7 @@ rule RDS
 {
 
     meta:
-        description0 = "MongoDB의 비밀번호, 포트번호 등을 알아낼 수 있음"
+        description0 = "Amazon rds instance password"
 
     strings:
         $RDS0 = "rds.amazonaws.com password"
