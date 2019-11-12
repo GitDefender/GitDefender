@@ -85,7 +85,7 @@ rule Environment_config
 
 }
 
-rule _Ventrilo_server_
+rule Ventrilo_server
 {
 
     meta:
