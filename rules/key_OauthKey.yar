@@ -1,6 +1,4 @@
-#all_need_config
-
-rule Google_Oauth :
+rule Google_Oauth
 {
 
     meta:
@@ -29,7 +27,7 @@ rule Facebook_Oauth
 
 }
 
-rule Github_Oauth :
+rule Github_Oauth
 {
 
     meta:
