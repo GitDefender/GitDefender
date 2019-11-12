@@ -1,4 +1,4 @@
-rule Rubygems : need_config
+rule Rubygems
 {
 
     meta:
