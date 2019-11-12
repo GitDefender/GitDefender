@@ -1,4 +1,4 @@
-rule OpenVPN
+rule OpenVPN : filename
 {
 
     meta:
@@ -12,7 +12,7 @@ rule OpenVPN
 
 }
 
-rule Tunnelblick
+rule Tunnelblick : filename
 {
 
     meta:
@@ -25,4 +25,3 @@ rule Tunnelblick
         $Tunnelblick0
 
 }
-
