@@ -78,7 +78,7 @@ rule Environment_config
         description0 = "Environment variable setting part. Contains settings for the server environment."
 
     strings:
-        $Environment_config0 = /^\.?env$/
+        $Environment_config0 = /\.?env/
 
     condition:
         $Environment_config0
