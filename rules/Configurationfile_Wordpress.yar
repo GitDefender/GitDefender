@@ -1,4 +1,4 @@
-rule Wordpress_configuration_file
+rule Wordpress_configuration_file : filename
 {
 
     meta:
