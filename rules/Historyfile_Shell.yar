@@ -20,10 +20,11 @@ rule Bash_Zsh_history : need_config
         description0 = "need_config - log args or directory locations of commands not recorded in aact / pacct files."
 
     strings:
-        $Bash_Zsh_history0 = /\\A\\.?(bash_|zsh_|z)?history\\z ^\.?(bash_|zsh_|sh_|z)?history$/
+        $Bash_Zsh_history0 = /\\A\\.?(bash_|zsh_|z)?history\\z/
+        $Bash_Zsh_history1 = /^\.?(bash_|zsh_|sh_|z)?history$/
 
     condition:
-        $Bash_Zsh_history0
+        $Bash_Zsh_history0 or $Bash_Zsh_history1
 
 }
 
