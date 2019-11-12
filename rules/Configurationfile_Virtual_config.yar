@@ -5,7 +5,7 @@ rule docker
         description0 = "Docker configuration file"
 
     strings:
-        $docker0 = /^\.?dockercfg$/
+        $docker0 = /\.?dockercfg/
 
     condition:
         $docker0
