@@ -92,10 +92,10 @@ rule Ventrilo_server
         description0 = "Ventrilo server configuration file"
 
     strings:
-        $_Ventrilo_server_0 = "ventrilo_srv.ini"
+        $Ventrilo_server_0 = "ventrilo_srv.ini"
 
     condition:
-        $_Ventrilo_server_0
+        $Ventrilo_server_0
 
 }
 
