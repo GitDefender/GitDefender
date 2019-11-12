@@ -5,7 +5,7 @@ rule PHP_config
         description0 = "php configuration file!"
 
     strings:
-        $PHP_config0 = /config(\.inc)?\.php$/
+        $PHP_config0 = /config(\.inc)?\.php/
 
     condition:
         $PHP_config0
