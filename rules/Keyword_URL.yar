@@ -43,8 +43,7 @@ rule Mongo_DB
 {
 
     meta:
-        description0 = "MongoDB password, port number, etc.
-"
+        description0 = "MongoDB password, port number, etc."
 
     strings:
         $Mongo_DB0 = ".mlab.com password"
@@ -67,4 +66,3 @@ rule RDS
         $RDS0
 
 }
-
