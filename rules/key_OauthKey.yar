@@ -4,8 +4,7 @@ rule Google_Oauth :
 {
 
     meta:
-        description0 = "구글 인증(auth)에 인증요청 보낼떄 사용하는 key 라고 판단"
-        description1 = "구글 인증(auth)에 인증요청 보낼떄 사용하는 데이터들이 저장됨 ( url, client 관련정보(secret key)) json 형태로 저장"
+        description0 = "Google OAuth key"
 
     strings:
         $Google_Oauth0 = /client_secret:[a-zA-Z0-9-_]{24}/
@@ -34,7 +33,7 @@ rule Github_Oauth :
 {
 
     meta:
-        description0 = "35,44 길이에 해당하는 ? 정보를 찾긴 어려우나 인증 요청을 보낼때 사용하는 정보로 추정"
+        description0 = "Github OAuth Key"
 
     strings:
         $Github_Oauth0 = /[g|G][i|I][t|T][h|H][u|U][b|B].{0,30}['\"\\s][0-9a-zA-Z]{35,40}['\"\\s]/
@@ -48,7 +47,7 @@ rule Twitter_Oauth
 {
 
     meta:
-        description0 = "35,44 길이에 해당하는 ? 정보를 찾긴 어려우나 인증 요청을 보낼때 사용하는 정보로 추정"
+        description0 = "Twitter OAuth Key"
 
     strings:
         $Twitter_Oauth0 = /[t|T][w|W][i|I][t|T][t|T][e|E][r|R].{0,30}['\"\\s][0-9a-zA-Z]{35,44}['\"\\s]/
@@ -62,7 +61,7 @@ rule Square_OAuth_secret
 {
 
     meta:
-        description0 = "35,44 길이에 해당하는 ? 정보를 찾긴 어려우나 인증 요청을 보낼때 사용하는 정보로 추정"
+        description0 = "Square OAuth Key"
 
     strings:
         $Square_OAuth_secret0 = /sq0csp-[0-9A-Za-z\\-_]{43}/
