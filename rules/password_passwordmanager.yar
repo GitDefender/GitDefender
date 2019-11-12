@@ -16,7 +16,7 @@ rule Microsoft_BitLocker_Trusted_Platform_Module
 {
 
     meta:
-        description0 = "gitrob 정의 :  Microsoft BitLocker Trusted Platform Module/ password"
+        description0 = "Microsoft BitLocker Trusted Platform Module/ password"
 
     strings:
         $Microsoft_BitLocker_Trusted_Platform_Module0 = ".tpm"
