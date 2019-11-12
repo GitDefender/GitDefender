@@ -1,5 +1,3 @@
-#all_need_config
-
 rule Git
 {
 
@@ -14,16 +12,16 @@ rule Git
 
 }
 
-rule GitHub_Hub_command_line_client__GitHub_API_access_token
+rule GitHub_Hub_CLI_Client
 {
 
     meta:
         description0 = "GitHub Hub CLI client configuration file, can include GitHub API access tokens Expose port, userid, pwd, etc."
 
     strings:
-        $GitHub_Hub_command_line_client__GitHub_API_access_token0 = "config/hub"
+        $GitHub_Hub_CLI_Client0 = "config/hub"
 
     condition:
-        $GitHub_Hub_command_line_client__GitHub_API_access_token0
+        $GitHub_Hub_CLI_Client0
 
 }
