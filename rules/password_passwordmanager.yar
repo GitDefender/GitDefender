@@ -75,7 +75,7 @@ rule KeePass_password_manager
         description0 = "KeePass password manager database file."
 
     strings:
-        $KeePass_password_manager0 = "^kdbx?$"
+        $KeePass_password_manager0 = "kdbx"
 
     condition:
         $KeePass_password_manager0
