@@ -61,9 +61,8 @@ rule SQL_dump_file
         description0 = "Database dump contains records from the table structure and data from the db, usually in the form of a list of sql statements."
 
     strings:
-        $SQL_dump_file0 = "^sql(dump)?$"
-        $SQL_dump_file1 = "\\Asql(dump)?\\z"
-
+        $SQL_dump_file0 = /sql(dump)?/
+        $SQL_dump_file1 = /\\Asql(dump)?\\z/
 
     condition:
         $SQL_dump_file0 or $SQL_dump_file1
