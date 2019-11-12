@@ -11,7 +11,7 @@ rule Shell_config
         $Shell_config0 = "exports"
         $Shell_config1 = "functions"
         $Shell_config2 = "extra"
-        $Shell_config3 = /^\.?(bash|zsh|csh)rc$ .cshrc/
+        $Shell_config3 = /\.?(bash|zsh|csh)rc/
 
     condition:
         $Shell_config0 or $Shell_config1 or $Shell_config2 or $Shell_config3
@@ -25,7 +25,7 @@ rule Shell_command_alias
         description0 = "Shell configuration file-various credential keys such as password, API key"
 
     strings:
-        $Shell_command_alias0 = /^\.?(bash_|zsh_)?aliases$/
+        $Shell_command_alias0 = /\.?(bash_|zsh_)?aliases/
 
     condition:
         $Shell_command_alias0
@@ -39,7 +39,7 @@ rule Shell_profile
         description0 = "Shell configuration file-various credential keys such as password, API key"
 
     strings:
-        $Shell_profile0 = /^\.?(bash_|zsh_)?profile$/
+        $Shell_profile0 = /\.?(bash_|zsh_)?profile/
 
     condition:
         $Shell_profile0
