@@ -5,7 +5,7 @@ rule IntelliJ_IDEA_14
         description0 = "jetbrain java IDE LICENSE key"
 
     strings:
-        $IntelliJ_IDEA_140 = /^\.?idea14.key$/
+        $IntelliJ_IDEA_140 = /\.?idea14.key/
 
     condition:
         $IntelliJ_IDEA_140
