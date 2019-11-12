@@ -6,9 +6,10 @@ rule PHP_config
 
     strings:
         $PHP_config0 = /config(\.inc)?\.php/
+        $PHP_config1 = /configuration.php/
+
 
     condition:
-        $PHP_config0
+        $PHP_config0 or $PHP_config1
 
 }
-
