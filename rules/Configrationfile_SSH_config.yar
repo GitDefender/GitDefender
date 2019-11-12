@@ -5,12 +5,14 @@ rule SSH_configuration_file
         description0 = "SSH configuration file"
 
     strings:
-        $SSH_configuration_file0 = /\\.?ssh\/config\\z \.?ssh\/config$/
+        $SSH_configuration_file0 = /\\.?ssh\/config\\z/
+        $SSH_configuration_file1 = /\.?ssh\/config/
 
     condition:
-        $SSH_configuration_file0
+        $SSH_configuration_file0 or $SSH_configuration_file1
 
 }
+
 
 rule Jenkins_publish_over_SSH_plugin
 {
