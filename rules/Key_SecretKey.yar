@@ -5,7 +5,7 @@ rule _AWS_secret_key : need_config
         description0 = "Cloud service platform"
 
     strings:
-        $_AWS_secret_key0 = /(i)aws(.{0,20})(i)['\"][0-9a-zA-Z\/+]{40}['\"]/
+        $_AWS_secret_key0 = /aws(.{0,20})['\"][0-9a-zA-Z\/+]{40}['\"]/nocase
 
     condition:
         $_AWS_secret_key0
@@ -19,7 +19,7 @@ rule twitter_secret_key : need_config
         description0 = "Necessary information about plugin used when conneting with twiiter-consists of key and secret"
 
     strings:
-        $twitter_secret_key0 = /(i)twitter(.{0,20})?['\"][0-9a-zA-Z]{35,50}['\"]/
+        $twitter_secret_key0 = /twitter(.{0,20})['\"][0-9a-zA-Z]{35,50}['\"]/nocase
 
     condition:
         $twitter_secret_key0
@@ -33,7 +33,8 @@ rule facebook_secret_key : need_config
         description0 = "Key for using facebook api"
 
     strings:
-        $facebook_secret_key0 = /(i)(facebook|fb)(.{0,20})(i)['\"][0-9a-fA-F]{32}['\"]/
+              $facebook_secret_key0 = /(facebook|fb)(.{0,20})['\"][0-9a-fA-F]{32}['\"]/nocase
+
 
     condition:
         $facebook_secret_key0
