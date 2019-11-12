@@ -16,9 +16,7 @@ rule Potential_jrml_journal_file
 {
 
     meta:
-        description0 = "Potential jrnl journal file
-일상적인 정보가 담겨있는 파일
-DB로 들어가야함"
+        description0 = "Potential jrnl journal file"
 
     strings:
         $Potential_jrml_journal_file0 = "journal.txt"
