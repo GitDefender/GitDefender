@@ -47,7 +47,7 @@ rule Apple_Keychain
         description0 = "This tool encrypts and stores Apple's sensitive data."
 
     strings:
-        $Apple_Keychain0 = " keychain"
+        $Apple_Keychain0 = "keychain"
 
     condition:
         $Apple_Keychain0
