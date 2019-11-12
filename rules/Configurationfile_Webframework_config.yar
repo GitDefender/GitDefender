@@ -2,7 +2,7 @@ rule Ruby_On_Rails
 {
 
     meta:
-        description0 = "Web framework written in ruby ​​configration file of potential database-exposing database credentials information ip, port, username, pw, mac address, etc.
+        description0 = "Web framework written in ruby configration file of potential database-exposing database credentials information ip, port, username, pw, mac address, etc.
 "
 
     strings:
@@ -40,4 +40,3 @@ rule Drupal
         $Drupal0
 
 }
-
