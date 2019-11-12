@@ -13,11 +13,11 @@ rule shell_history
 
 }
 
-rule Bash_Zsh_history : need_config
+rule Bash_Zsh_history
 {
 
     meta:
-        description0 = "need_config - log args or directory locations of commands not recorded in aact / pacct files."
+        description0 = "log args or directory locations of commands not recorded in aact / pacct files."
 
     strings:
         $Bash_Zsh_history0 = /\\A\\.?(bash_|zsh_|z)?history\\z/
@@ -27,4 +27,3 @@ rule Bash_Zsh_history : need_config
         $Bash_Zsh_history0 or $Bash_Zsh_history1
 
 }
-
