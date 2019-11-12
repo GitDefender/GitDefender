@@ -19,10 +19,12 @@ rule GNOME_Keyring_
         description0 = "GNOME Keyring database file"
 
     strings:
-        $GNOME_Keyring_0 = "key(store|ring)"
+        $GNOME_Keyring_0 = "keystore"
+        $GNOME_Keyring_1 = "keyring"
+
 
     condition:
-        $GNOME_Keyring_0
+        $GNOME_Keyring_0 or $GNOME_Keyring_1
 
 }
 
