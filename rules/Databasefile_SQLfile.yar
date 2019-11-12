@@ -1,42 +1,42 @@
-rule Microsoft_SQL_
+rule Microsoft_SQL
 {
 
     meta:
         description0 = "Microsoft SQL database file"
 
     strings:
-        $Microsoft_SQL_0 = ".mdf"
+        $Microsoft_SQL0 = ".mdf"
 
     condition:
-        $Microsoft_SQL_0
+        $Microsoft_SQL0
 
 }
 
-rule Microsoft_SQL_server_compact_
+rule Microsoft_SQL_server_compact
 {
 
     meta:
         description0 = "It is a compact relational database format created by Microsoft. Full database content is included."
 
     strings:
-        $Microsoft_SQL_server_compact_0 = "sdf"
+        $Microsoft_SQL_server_compact0 = "sdf"
 
     condition:
-        $Microsoft_SQL_server_compact_0
+        $Microsoft_SQL_server_compact0
 
 }
 
-rule SQLite_
+rule SQLite
 {
 
     meta:
         description0 = "sql contents-table structure, columns, data, etc."
 
     strings:
-        $SQLite_0 = "sqlite"
+        $SQLite0 = "sqlite"
 
     condition:
-        $SQLite_0
+        $SQLite0
 
 }
 
@@ -68,4 +68,3 @@ rule SQL_dump_file
         $SQL_dump_file0 or $SQL_dump_file1
 
 }
-
