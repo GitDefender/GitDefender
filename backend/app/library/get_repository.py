@@ -1,7 +1,7 @@
 import requests
 import json
 import os
-from library.crawl_tool_base import CrawlTool
+from .crawl_tool_base import CrawlTool
 
 
 class GetRepository(CrawlTool):
@@ -41,13 +41,11 @@ class GetRepository(CrawlTool):
 
             self.repositories = repo_list
             return dict(
-                status=200,
                 repository_list=repo_list
                 )
 
         except Exception as e:
             return dict(
-                status=res.status_code,
                 repository=[],
                 error_message=str(e)
                 )
@@ -83,3 +81,13 @@ class GetRepository(CrawlTool):
     @repositories_index.setter
     def repositories_index(self, repo_ind):
         self.__repositories_index = repo_ind
+
+if __name__ =="__main__":
+    my1 = GetRepository()
+    my1.user_token = "token 8b5aa78b499e2ca0cadc7839a8cadd8860bf5cef"
+    my1.user_agent = "GitDefender"
+    my1.test()
+    #print(my1.user_agent)
+    # my.user_token("216e53175a0b2fbe3ba21665de1d8b783ba2a4f2")
+
+    

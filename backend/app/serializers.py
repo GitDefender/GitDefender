@@ -3,9 +3,14 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from .models import GdfUser
 
-class CreateUserSerializer(serializers.ModelSerializer):
+class GdfUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = GdfUser
+        fields = ('github_token', )
+
+class CreateUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
         fields = ("id", "username", "email", "password")
         extra_kwargs = {"password": {"write_only": True}}
 
@@ -17,9 +22,12 @@ class CreateUserSerializer(serializers.ModelSerializer):
         return user
 
 class UserSerializer(serializers.ModelSerializer):
+    git = GdfUserSerializer(many=False, required=False)
+
     class Meta:
         model = User
-        fields = ("id", "username")
+        fields = ("id", "username", "git")
+
 
 class LoginUserSerializer(serializers.Serializer):
     username = serializers.CharField(help_text="your username")
@@ -31,5 +39,3 @@ class LoginUserSerializer(serializers.Serializer):
             return user
         raise serializers.ValidationError("Unable to log in with provided credentials")
 
-class GithubSerializer(serializers.Serializer):
-    token = serializers.CharField()
