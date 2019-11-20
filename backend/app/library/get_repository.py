@@ -4,8 +4,10 @@ import os
 from .crawl_tool_base import CrawlTool
 
 class GetRepository(CrawlTool):
-    def __init__(self):
+    def __init__(self, param_github_tok, param_github_agent="GitDefender"):
         CrawlTool.__init__(self)
+        self.user_token = param_github_tok
+        self.user_agent = param_github_agent
         self.__repositories = None
         self.__repositories_index = None
         self.api_route = '/user/repos'
@@ -85,11 +87,7 @@ class GetRepository(CrawlTool):
         self.__repositories_index = repo_ind
 
 if __name__ =="__main__":
-    my1 = GetRepository()
-    my1.user_token = "token 8b5aa78b499e2ca0cadc7839a8cadd8860bf5cef"
-    my1.user_agent = "GitDefender"
+    my1 = GetRepository("token <><><><><>")
     my1.test()
-    #print(my1.user_agent)
-    # my.user_token("216e53175a0b2fbe3ba21665de1d8b783ba2a4f2")
 
     
