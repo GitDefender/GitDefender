@@ -3,7 +3,6 @@ import json
 import os
 from .crawl_tool_base import CrawlTool
 
-
 class GetRepository(CrawlTool):
     def __init__(self):
         CrawlTool.__init__(self)
@@ -41,7 +40,8 @@ class GetRepository(CrawlTool):
 
             self.repositories = repo_list
             return dict(
-                repository_list=repo_list
+                repositories=repo_list,
+                repository_size = len(repo_list)
                 )
 
         except Exception as e:
@@ -53,12 +53,14 @@ class GetRepository(CrawlTool):
     def _get_repo_name(self, data):
         """
         param: {'name': ~ , 'clone_url': ~ , 'commits_url': ~}
-        return: 
+        return:
+
+        data for repositories
         """
         try:
             repository_info = dict(
                 name=data['name'],
-                clone_url=data['clone_url'],
+                url=data['clone_url'],
                 commits_url=str(data['commits_url']).replace('{/sha}', '')
             )
             return repository_info
