@@ -7,25 +7,38 @@ test:
   stage: test
   script: 
     echo "-test server running-"
+    apt-get update -y
     apt-get install python3 python3-pip
     pip3 install -r ./backend/requirements.txt
-    python3 manage.py makemigrations
+    python3 manage.py makemigrations app
+    python3 manage.py migrate app
+  only:
+  - develop
+  - /^develop/.*/
+  - master
 
 build:
   stage: build
   script:
-    - echo "-build server running-"
-    - apt-get install python3 python3-pip
-    - pip3 install -r ./backend/requirements.txt
-    - python3 manage.py makemigrations
-
+    echo "-build server running-"
+    apt-get update -y
+    apt-get install python3 python3-pip
+    pip3 install -r ./backend/requirements.txt
+    python3 manage.py makemigrations app
+    python3 manage.py migrate app
+  only:
+  - develop
+  - master
+  
 deploy_staging:
   stage: deploy
   script:
-    - echo "-build server running-"
-    - apt-get install python3 python3-pip
-    - pip3 install -r ./backend/requirements.txt
-    - python3 manage.py makemigrations
+    echo "!!! deploy server running !!!"
+    apt-get update -y
+    apt-get install python3 python3-pip
+    pip3 install -r ./backend/requirements.txt
+    python3 manage.py makemigrations app
+    python3 manage.py migrate app
   environment:
     name: staging
     url: https://gitdefender.com
