@@ -7,10 +7,9 @@ from ..models import GdfUser
 import os
 import requests, json
 
-@api_view(['GET', 'POST'])
+@api_view(['GET'])
 @permission_classes((IsAuthenticated,))
 def oauth2_callback(request):
-    
     """
     :param request:
     :return {status:'', code:''}:
@@ -36,7 +35,18 @@ def oauth2_callback(request):
         }
 
         res = requests.post(ACCESS_TOKEN_URL, headers=header, params=params)
-        user_access_token = res.json()['access_token']
+        
+        try:
+            if res.json()['error']:
+                body = dict(
+                    message=res.json()
+                )
+
+                return Response(
+                    body, status=status.HTTP_401_UNAUTHORIZED
+                )
+        except:
+            user_access_token = res.json()['access_token']
 
         if len(GdfUser.objects.filter(username=request.user)) == 0:
             user_Gdf = GdfUser.objects.create(username=request.user.get_username(), github_tokn=user_access_token)
@@ -55,5 +65,5 @@ def oauth2_callback(request):
         # 디버깅용
 
     except Exception as e:
-        body = {'message': e}
+        body = {'message': e.args}
         return Response(body, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
