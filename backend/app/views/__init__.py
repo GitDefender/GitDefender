@@ -4,7 +4,5 @@
 from .GithubCallbackAPI import *
 from .LoginAPI import *
 from .oauth2 import *
-from .RepoLoad import *
-from .ScanRepo import *
 from .UserAPI import *
 from .oauth2_callback import *
