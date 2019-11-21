@@ -44,7 +44,7 @@ def oauth2_callback(request):
             user_Gdf = GdfUser.objects.get(username=request.user)
             user_Gdf.github_token = user_access_token
 
-        user_Gdf.save()}
+        user_Gdf.save()
 
         user_access_body = dict(
             code=user_Gdf.github_token,
