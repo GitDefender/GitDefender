@@ -85,9 +85,3 @@ class GetRepository(CrawlTool):
     @repositories_index.setter
     def repositories_index(self, repo_ind):
         self.__repositories_index = repo_ind
-
-if __name__ =="__main__":
-    my1 = GetRepository("token <><><><><>")
-    my1.test()
-
-    
