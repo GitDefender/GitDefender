@@ -1,7 +1,7 @@
 import requests
 import json
 import os
-from crawl_tool_base import CrawlTool
+from .crawl_tool_base import CrawlTool
 
 class GetRepository(CrawlTool):
     def __init__(self, param_github_tok, param_github_agent="GitDefender"):
