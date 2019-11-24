@@ -91,22 +91,6 @@ class GetRepository(CrawlTool):
         except Exception as e:
             return e
 
-    def _get_recent_commit(self, commits_url):
-
-        headers = {'Content-Type': 'application/json; charset=utf-8',
-                'Authorization': self.user_token,
-                'Accept': 'application/vnd.github.machine-man-preview+json',
-                'User-Agent': self.user_agent
-            }
-
-        params = {
-            'client_id':self.client_id,
-            'client_secret': self.client_secret
-            }
-
-        res = requests.get(commits_url, headers=headers, params=params).json()
-        return res[0]['sha']
-
     @property
     def repositories(self):
         return self.__repositories
