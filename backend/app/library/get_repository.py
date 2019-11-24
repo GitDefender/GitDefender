@@ -1,7 +1,7 @@
 import requests
 import json
 import os
-from .crawl_tool_base import CrawlTool
+from crawl_tool_base import CrawlTool
 
 class GetRepository(CrawlTool):
     def __init__(self, param_github_tok, param_github_agent="GitDefender"):
@@ -37,6 +37,8 @@ class GetRepository(CrawlTool):
         try:
             if res.status_code == 401:
                 raise Exception("Unvalid User Token")
+            elif res.status_code == 403:
+                raise Exception("API rate limit exceeded")
             repo_list = list(map(self._get_repo_name, res.json()))
             # get repository_list
 
@@ -59,16 +61,51 @@ class GetRepository(CrawlTool):
 
         data for repositories
         """
+
         try:
+            commits_url = str(data['commits_url']).replace('{/sha}', '')
+            headers = {'Content-Type': 'application/json; charset=utf-8',
+                'Authorization': self.user_token,
+                'Accept': 'application/vnd.github.machine-man-preview+json',
+                'User-Agent': self.user_agent
+                }
+
+            params = {
+                'client_id':self.client_id,
+                'client_secret': self.client_secret
+                }
+
+            repo_commit_data = requests.get(commits_url, headers=headers, params=params).json()
+            recent_commit_message = repo_commit_data[0]['commit']['message']
+
             repository_info = dict(
                 name=data['name'],
                 url=data['clone_url'],
-                commits_url=str(data['commits_url']).replace('{/sha}', '')
+                commits_url=commits_url,
+                recent_commit_date=data['pushed_at'],
+                recent_commit_message=recent_commit_message,
+                secure_level='low' # ['low', 'middle', 'high'] 추후 기능구현 예정
             )
             return repository_info
 
         except Exception as e:
             return e
+
+    def _get_recent_commit(self, commits_url):
+
+        headers = {'Content-Type': 'application/json; charset=utf-8',
+                'Authorization': self.user_token,
+                'Accept': 'application/vnd.github.machine-man-preview+json',
+                'User-Agent': self.user_agent
+            }
+
+        params = {
+            'client_id':self.client_id,
+            'client_secret': self.client_secret
+            }
+
+        res = requests.get(commits_url, headers=headers, params=params).json()
+        return res[0]['sha']
 
     @property
     def repositories(self):
@@ -85,3 +122,8 @@ class GetRepository(CrawlTool):
     @repositories_index.setter
     def repositories_index(self, repo_ind):
         self.__repositories_index = repo_ind
+
+
+if __name__ == "__main__":
+    data = GetRepository("Token 44371dca090a3794c560427d26931a19f46d5155")
+    data.test()
