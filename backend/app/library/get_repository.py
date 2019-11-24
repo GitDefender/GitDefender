@@ -33,19 +33,50 @@ class GetRepository(CrawlTool):
 
         res = requests.get(self.github_api_root + self.api_route, \
             headers=headers, params=params)
-
+        
         try:
             if res.status_code == 401:
                 raise Exception("Unvalid User Token")
             elif res.status_code == 403:
                 raise Exception("API rate limit exceeded")
-            repo_list = list(map(self._get_repo_name, res.json()))
+            
+            repo_list = list()
+
+            for data in res.json():
+                commits_url = str(data['commits_url']).replace('{/sha}', '')
+                headers = {'Content-Type': 'application/json; charset=utf-8',
+                'Authorization': self.user_token,
+                'Accept': 'application/vnd.github.machine-man-preview+json',
+                'User-Agent': self.user_agent
+                    }
+
+                params = {
+                'client_id':self.client_id,
+                'client_secret': self.client_secret
+                    }
+
+                try:
+                    repo_commit_data = requests.get(commits_url, headers=headers, params=params).json()
+                    recent_commit_message = repo_commit_data[0]['commit']['message']
+                except:
+                    recent_commit_message = ''
+                repository_info = dict(
+                    name=str(data['name']),
+                    url=str(data['clone_url']),
+                    commits_url=str(commits_url),
+                    recent_commit_date=str(data['pushed_at']),
+                    recent_commit_message=str(recent_commit_message),
+                    secure_level=str("low") # ['low', 'middle', 'high'] 추후 기능구현 예정
+                )
+
+                repo_list.append(repository_info)
+
             # get repository_list
 
             self.repositories = repo_list
             return dict(
                 repositories=repo_list,
-                repository_size = len(repo_list)
+                repository_size = str(len(repo_list))
                 )
 
         except Exception as e:
@@ -53,43 +84,6 @@ class GetRepository(CrawlTool):
                 repository=[],
                 error_message=str(e)
                 )
-
-    def _get_repo_name(self, data):
-        """
-        param: {'name': ~ , 'clone_url': ~ , 'commits_url': ~}
-        return:
-
-        data for repositories
-        """
-
-        try:
-            commits_url = str(data['commits_url']).replace('{/sha}', '')
-            headers = {'Content-Type': 'application/json; charset=utf-8',
-                'Authorization': self.user_token,
-                'Accept': 'application/vnd.github.machine-man-preview+json',
-                'User-Agent': self.user_agent
-                }
-
-            params = {
-                'client_id':self.client_id,
-                'client_secret': self.client_secret
-                }
-
-            repo_commit_data = requests.get(commits_url, headers=headers, params=params).json()
-            recent_commit_message = repo_commit_data[0]['commit']['message']
-
-            repository_info = dict(
-                name=data['name'],
-                url=data['clone_url'],
-                commits_url=commits_url,
-                recent_commit_date=data['pushed_at'],
-                recent_commit_message=recent_commit_message,
-                secure_level='low' # ['low', 'middle', 'high'] 추후 기능구현 예정
-            )
-            return repository_info
-
-        except Exception as e:
-            return e
 
     @property
     def repositories(self):
@@ -110,4 +104,4 @@ class GetRepository(CrawlTool):
 
 if __name__ == "__main__":
     data = GetRepository("Token 44371dca090a3794c560427d26931a19f46d5155")
-    data.test()
+    dd = json.dumps(data.get_repo())
