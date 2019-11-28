@@ -49,7 +49,10 @@ def oauth2_callback(request):
             user_access_token = res.json()['access_token']
 
         if len(GdfUser.objects.filter(username=request.user)) == 0:
-            user_Gdf = GdfUser.objects.create(username=request.user.get_username(), github_tokn=user_access_token)
+            #print("-0-0-0-0-0-0-03-203-02-3203-02-30-")
+            #print("username : " + str(request.user.get_username()))
+            #print("github_token : " + str(user_access_token))
+            user_Gdf = GdfUser.objects.create(username=request.user.get_username(), github_token=user_access_token)
         else:
             user_Gdf = GdfUser.objects.get(username=request.user)
             user_Gdf.github_token = user_access_token
