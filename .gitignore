@@ -573,3 +573,6 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/git,django,windows,pycharm,visualstudiocode
+backend/app/migrations/0001_initial.py
+
+backend/gitdefender/key.json
