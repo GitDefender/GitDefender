@@ -1,4 +1,7 @@
 import json
+import os
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 class CrawlTool:
@@ -6,7 +9,7 @@ class CrawlTool:
         self.__github_api_root = "https://api.github.com"
         self.__user_token = tok
         self.__api_route = None
-        with open("./secret.json", 'r') as secret:
+        with open(BASE_DIR + "/gitdefender/key.json", 'r') as secret:
             secret = json.loads(secret.read())
             self.__client_id = secret['CLIENT_ID']
             self.__client_secret = secret['CLIENT_SECRET']

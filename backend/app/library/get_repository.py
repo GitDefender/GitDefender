@@ -1,12 +1,13 @@
 import requests
 import json
 import os
-from library.crawl_tool_base import CrawlTool
-
+from .crawl_tool_base import CrawlTool
 
 class GetRepository(CrawlTool):
-    def __init__(self):
+    def __init__(self, param_github_tok, param_github_agent="GitDefender"):
         CrawlTool.__init__(self)
+        self.user_token = param_github_tok
+        self.user_agent = param_github_agent
         self.__repositories = None
         self.__repositories_index = None
         self.api_route = '/user/repos'
@@ -17,6 +18,7 @@ class GetRepository(CrawlTool):
         print("api route : " + self.api_route)
         print("result : " + str(self.get_repo()))
         print("----test End ----")
+    
 
     def get_repo(self):
         headers = {'Content-Type': 'application/json; charset=utf-8',
@@ -41,13 +43,12 @@ class GetRepository(CrawlTool):
 
             self.repositories = repo_list
             return dict(
-                status=200,
-                repository_list=repo_list
+                repositories=repo_list,
+                repository_size = len(repo_list)
                 )
 
         except Exception as e:
             return dict(
-                status=res.status_code,
                 repository=[],
                 error_message=str(e)
                 )
@@ -55,12 +56,14 @@ class GetRepository(CrawlTool):
     def _get_repo_name(self, data):
         """
         param: {'name': ~ , 'clone_url': ~ , 'commits_url': ~}
-        return: 
+        return:
+
+        data for repositories
         """
         try:
             repository_info = dict(
                 name=data['name'],
-                clone_url=data['clone_url'],
+                url=data['clone_url'],
                 commits_url=str(data['commits_url']).replace('{/sha}', '')
             )
             return repository_info
@@ -83,3 +86,4 @@ class GetRepository(CrawlTool):
     @repositories_index.setter
     def repositories_index(self, repo_ind):
         self.__repositories_index = repo_ind
+
