@@ -1,10 +1,20 @@
+from django.core.exceptions import ObjectDoesNotExist
+from app.models import GdfUser
+import doctest
 import json
 import os
+import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-
 class CrawlTool:
+    """
+    doctest checked.
+    >>> a = CrawTool()
+    >>> a.github_token = '1111'
+    ''
+    """
+
     def __init__(self, tok=None):
         self.__github_api_root = "https://api.github.com"
         self.__user_token = tok
@@ -63,3 +73,20 @@ class CrawlTool:
     def user_agent(self, agent_name):
         self.__user_agent = agent_name
 
+    @property
+    def github_username(self):
+        if self.user_token == None:
+            raise "Not Exist CrawlTool.user_token"
+
+        # high-level package import error fixed.
+    
+        try:
+            obj = GdfUser.objects.get(github_token=self.user_token)
+
+        except ObjectDoesNotExist as e:
+            return ""
+        
+        return str(obj.username)
+
+if __name__ == "__main__":
+    doctest.testmod()
