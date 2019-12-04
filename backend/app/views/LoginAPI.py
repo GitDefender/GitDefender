@@ -7,11 +7,13 @@ from django.contrib.auth.models import User
 from knox.models import AuthToken
 from knox.auth import TokenAuthentication
 
+from ..models import GdfUser
+
 from ..serializers import (
     CreateUserSerializer,
     UserSerializer,
     LoginUserSerializer,
-    GdfUserSerializer
+    GdfUserSerializer,
 )
 
 class LoginAPI(generics.GenericAPIView):
@@ -33,6 +35,7 @@ class LoginAPI(generics.GenericAPIView):
 
 class LogoutView(generics.GenericAPIView):
     authentication_classes = (TokenAuthentication,)
+    serializer_class = LoginUserSerializer
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, format=None):
