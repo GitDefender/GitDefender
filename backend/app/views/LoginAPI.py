@@ -7,8 +7,7 @@ from django.contrib.auth.models import User
 from knox.models import AuthToken
 from knox.auth import TokenAuthentication
 
-from ..models import GdfUser
-
+from ..models import GdfUser    
 from ..serializers import (
     CreateUserSerializer,
     UserSerializer,
@@ -72,6 +71,8 @@ class RegistrationAPI(generics.GenericAPIView):
         serializer = self.get_serializer(data = request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+
+        GdfUser.objects.create(username=request.data["username"], gdf_token=AuthToken.objects.create(user)[1])
 
         return Response(
             {

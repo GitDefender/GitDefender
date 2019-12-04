@@ -53,10 +53,12 @@ def oauth2_callback(request):
                     body, status=status.HTTP_401_UNAUTHORIZED
                 )
         except:
-            user_access_token = res.json()['access_token']
+            user_access_token = res.json()['access_token'][0]
 
-        user_Gdf = GdfUser.objects.get_or_create(username=request.user.get_username(), github_token=user_access_token)[0]
+        res_username = requests.get("https://api.github.com/user", headers={'Authorization': "Token " + user_access_token}).json()['login']
 
+        user_Gdf = GdfUser.objects.update_or_create(username=request.user.get_username(), defaults={
+            'github_token': user_access_token, 'github_username': res_username})
         user_Gdf.save()
 
         user_access_body = dict(

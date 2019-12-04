@@ -43,3 +43,16 @@ class GetRepositorySerializer(serializers.Serializer):
     
     def to_representation(self, instance):
         return instance
+
+class Oauth2Seriailizer(serializers.Serializer):
+    code = serializers.CharField(help_text="provided by Github")
+    username = serializers.CharField(help_text="Github username provided by Github")
+
+    def to_representation(self, instance):
+        return instance
+
+class GetBranchSerializer(serializers.Serializer):
+    branches = serializers.ListField(help_text="['master', 'develop', 'feature/~~/~~]")
+
+    def to_representation(self, instance):
+        return instance
