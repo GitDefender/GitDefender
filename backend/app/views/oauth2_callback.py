@@ -13,7 +13,8 @@ import requests, json
 test_param = openapi.Parameter('code', openapi.IN_QUERY, description="Github User Identify pre_token", type=openapi.TYPE_STRING)
 user_response = openapi.Response('response description', Oauth2Seriailizer)
 
-@swagger_auto_schema(method='get', manual_parameters=[test_param], operation_description="GET /api/v1/auth/github_oauth_callback")
+@swagger_auto_schema(method='get', manual_parameters=[test_param], 
+    operation_description="GET /api/v1/auth/github_oauth_callback\nGithub Oauth2 후 자동 리다이렉트 되는 API")
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
 def oauth2_callback(request):

@@ -1,3 +1,4 @@
+from rest_framework.settings import api_settings
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
@@ -39,10 +40,20 @@ class LoginUserSerializer(serializers.Serializer):
         raise serializers.ValidationError("Unable to log in with provided credentials")
 
 class GetRepositorySerializer(serializers.Serializer):
-    page = serializers.IntegerField(help_text="Page Number")
+    class RepoField(serializers.DictField):
+        name = serializers.CharField(help_text="Repository name")
+        url = serializers.CharField(help_text="Repository URL")
+        latest_commit = serializers.DateField(format=api_settings.DATE_FORMAT)
+        latest_scan = serializers.DateField(format=api_settings.DATE_FORMAT)
+
     
+    repositories = serializers.ListField(required=True, child=RepoField())
+    repository_size = serializers.IntegerField(required=True)
+
     def to_representation(self, instance):
         return instance
+
+
 
 class Oauth2Seriailizer(serializers.Serializer):
     code = serializers.CharField(help_text="provided by Github")
