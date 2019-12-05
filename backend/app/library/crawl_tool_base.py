@@ -76,8 +76,10 @@ class CrawlTool:
 
     def github_username(self, gdf_token):
         # gdf_token -> github_username
-        github_username = GdfUser.objects.get(gdf_token = gdf_token).github_username
-
+        try:
+            return GdfUser.objects.get(gdf_token = gdf_token).github_username
+        except:
+            return ""
 
 if __name__ == "__main__":
     doctest.testmod()
