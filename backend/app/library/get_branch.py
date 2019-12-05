@@ -1,9 +1,9 @@
 from django.core.exceptions import ObjectDoesNotExist
-from doctest
+import doctest
 import requests
 import json
 
-from crawl_tool_base import CrawlTool
+from app.library.crawl_tool_base import CrawlTool
 
 class GetBranch(CrawlTool):
     """
@@ -32,7 +32,7 @@ class GetBranch(CrawlTool):
             return list()
 
     @property
-    def branch(self):
+    def get_branch(self):
         return self.branches
 
 if __name__ == "__main__":

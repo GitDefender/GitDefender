@@ -6,3 +6,4 @@ from .oauth2 import *
 from .UserAPI import *
 from .oauth2_callback import *
 from .GetRepoAPI import *
+from .GetBranchAPI import *

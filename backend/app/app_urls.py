@@ -6,6 +6,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 from .views import oauth2, RegistrationAPI, LoginAPI, UserAPI, LogoutView, oauth2_callback, GetRepositoryView
+from .views import get_branch
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -27,7 +28,9 @@ urlpatterns = [
     path('auth/login', LoginAPI.as_view(), name='login'),
     path('auth/logout/', LogoutView.as_view(), name='logout'),
     path('auth/github_oauth_callback/', oauth2_callback, name='github_oauth_calback'),
-    path('auth/get_repository/', GetRepositoryView.as_view(), name='repository'),
+    path('get_repository', GetRepositoryView.as_view(), name='repository'),
+    path('get_branch', get_branch, name='branch'),
+    
 
     url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
