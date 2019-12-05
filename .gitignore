@@ -370,6 +370,8 @@ coverage.xml
 # Translations
 *.mo
 
+.app/migrations
+
 # Django stuff:
 db.sqlite3-journal
 
