@@ -1,4 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
+from knox.models import AuthToken
 from app.models import GdfUser
 import doctest
 import json
@@ -73,20 +74,10 @@ class CrawlTool:
     def user_agent(self, agent_name):
         self.__user_agent = agent_name
 
-    @property
-    def github_username(self):
-        if self.user_token == None:
-            raise "Not Exist CrawlTool.user_token"
+    def github_username(self, gdf_token):
+        # gdf_token -> github_username
+        github_username = GdfUser.objects.get(gdf_token = gdf_token).github_username
 
-        # high-level package import error fixed.
-    
-        try:
-            obj = GdfUser.objects.get(github_token=self.user_token)
-
-        except ObjectDoesNotExist as e:
-            return ""
-        
-        return str(obj.username)
 
 if __name__ == "__main__":
     doctest.testmod()

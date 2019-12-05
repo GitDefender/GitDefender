@@ -2,11 +2,18 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-#from gitdefender.client import CLIENT_SECRET, CLIENT_ID
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+
+from ..serializers import Oauth2Seriailizer
 from ..models import GdfUser
 import os
 import requests, json
 
+test_param = openapi.Parameter('code', openapi.IN_QUERY, description="Github User Identify pre_token", type=openapi.TYPE_STRING)
+user_response = openapi.Response('response description', Oauth2Seriailizer)
+
+@swagger_auto_schema(method='get', manual_parameters=[test_param], operation_description="GET /api/v1/auth/github_oauth_callback")
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
 def oauth2_callback(request):
@@ -46,17 +53,12 @@ def oauth2_callback(request):
                     body, status=status.HTTP_401_UNAUTHORIZED
                 )
         except:
-            user_access_token = res.json()['access_token']
+            user_access_token = res.json()['access_token'][0]
 
-        if len(GdfUser.objects.filter(username=request.user)) == 0:
-            #print("-0-0-0-0-0-0-03-203-02-3203-02-30-")
-            #print("username : " + str(request.user.get_username()))
-            #print("github_token : " + str(user_access_token))
-            user_Gdf = GdfUser.objects.create(username=request.user.get_username(), github_token=user_access_token)
-        else:
-            user_Gdf = GdfUser.objects.get(username=request.user)
-            user_Gdf.github_token = user_access_token
+        res_username = requests.get("https://api.github.com/user", headers={'Authorization': "Token " + user_access_token}).json()['login']
 
+        user_Gdf = GdfUser.objects.update_or_create(username=request.user.get_username(), defaults={
+            'github_token': user_access_token, 'github_username': res_username})
         user_Gdf.save()
 
         user_access_body = dict(
