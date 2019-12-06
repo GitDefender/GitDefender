@@ -22,17 +22,17 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('auth/oauth2/', oauth2, name='oauth2'),
-    path('auth/register/', RegistrationAPI.as_view(), name='register'),
-    path('auth/user/', UserAPI.as_view(), name='user'),
+    path('auth/oauth2', oauth2, name='oauth2'),
+    path('auth/register', RegistrationAPI.as_view(), name='register'),
+    path('auth/user', UserAPI.as_view(), name='user'),
     path('auth/login', LoginAPI.as_view(), name='login'),
-    path('auth/logout/', LogoutView.as_view(), name='logout'),
-    path('auth/github_oauth_callback/', oauth2_callback, name='github_oauth_calback'),
+    path('auth/logout', LogoutView.as_view(), name='logout'),
+    path('auth/github_oauth_callback', oauth2_callback, name='github_oauth_calback'),
     path('get_repository', GetRepositoryView.as_view(), name='repository'),
     path('get_branch', get_branch, name='branch'),
     
 
     url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('swagger', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]

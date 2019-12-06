@@ -370,6 +370,8 @@ coverage.xml
 # Translations
 *.mo
 
+.app/migrations
+
 # Django stuff:
 db.sqlite3-journal
 
@@ -719,3 +721,4 @@ sketch
 .history
 
 # End of https://www.gitignore.io/api/git,node,react,visualstudiocode
+backend/app/migrations/

@@ -113,16 +113,12 @@ with open(BASE_DIR+'/gitdefender/key.json', 'r') as key:
 
     SWAGGER_SETTINGS = {
         'VALIDATOR_URL': 'http://localhost:8189',
-        'USE_SESSION_AUTH': False,
+        'USE_SESSION_AUTH': True,
         'SECURITY_DEFINITIONS': {
-            'Your App API - Swagger': {
-                'type': 'oauth2',
-                'authorizationUrl': '/api/v1/auth/login',
-                'tokenUrl': '/api/v1/auth/login',
-                'flow': 'accessCode',
-                'scopes': {
-                    'read:groups': 'read groups',
-                }
+            'api_key': {
+                'type': 'apiKey',
+                'in': 'header',
+                'name': 'Authorization'
             }
         },
         'OAUTH2_CONFIG': {

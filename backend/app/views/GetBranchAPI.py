@@ -5,12 +5,17 @@ from rest_framework.response import Response
 from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from app.views import swagger_collection as sche
 from app.models import GdfUser
 from app.library.get_branch import GetBranch
 
 test_param = openapi.Parameter('repository_name', openapi.IN_QUERY, description="Github Repository full name", type=openapi.TYPE_STRING)
 
-@swagger_auto_schema(method='get', manual_parameters=[test_param], operation_description="GET /api/v1/get_branch")
+@swagger_auto_schema(method='get', manual_parameters=[test_param], operation_description="GET /api/v1/get_branch",
+            responses={
+                200: sche.GET_BRANCH_STATUS_200.as_md(),
+                401: sche.GET_401.as_md()
+            })
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
 def get_branch(request):
@@ -24,7 +29,7 @@ def get_branch(request):
 
         return Response(body, status=status.HTTP_200_OK)
 
-    except ObjectDoesNotExist as e:
+    except ObjectDoesNotExist:
         return Response(status.HTTP_401_UNAUTHORIZED)
-    except Exception as e:
+    except Exception:
         return Response(status.HTTP_500_INTERNAL_SERVER_ERROR)
