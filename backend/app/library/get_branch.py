@@ -12,7 +12,7 @@ class GetBranch(CrawlTool):
     >>> print(data.branch)
     """
     def __init__(self, gitdefender_tok, reponame):
-        CrawlTool.__init__(self)
+        super().__init__(self)
         self.branches = list()
         self.branch_list = None
         self.user_token = gitdefender_tok

@@ -4,7 +4,7 @@ from crawl_tool_base import CrawlTool
 class crawl_commit(CrawlTool):
 
     def __init__(self):
-        CrawlTool.__init__(self)
+        super().__init__(self)
 
     #repo 가져오기
     def _get_repository(self):

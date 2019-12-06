@@ -722,3 +722,5 @@ sketch
 
 # End of https://www.gitignore.io/api/git,node,react,visualstudiocode
 backend/app/migrations/
+
+backend/app/library/yara_scan/
