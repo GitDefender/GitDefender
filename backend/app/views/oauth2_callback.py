@@ -28,7 +28,6 @@ def oauth2_callback(request):
     try:
         session_code = request.GET['code']
         user_gdf_token = request.GET['state']
-        print("user_gdf_token : " + str(user_gdf_token))
         # session_code를 ACCESS_TOKEN_URL에 요청해 token으로 exchange
         header = {
             'Accept': 'application/json'
@@ -60,7 +59,6 @@ def oauth2_callback(request):
         try:
             res_username = requests.get("https://api.github.com/user", headers={'Authorization': "bearer " + user_access_token}).json()
             res_username = res_username['login']
-            print(res_username)
         except:
             return Response(
                     str(res_username.json()), status=status.HTTP_401_UNAUTHORIZED)
