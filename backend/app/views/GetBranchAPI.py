@@ -1,8 +1,9 @@
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
+from knox.auth import TokenAuthentication
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from app.views import swagger_collection as sche
@@ -17,19 +18,18 @@ test_param = openapi.Parameter('repository_name', openapi.IN_QUERY, description=
                 401: sche.GET_401.as_md()
             })
 @api_view(['GET'])
-@permission_classes((IsAuthenticated,))
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def get_branch(request):
     try:
         user_gdf_token = request.headers['Authorization'].replace("Token", "").strip()
-        gdf_instance = GdfUser.objects.get(gitdefender_token=user_gdf_token)
 
-        get_branch_instance = GetBranch(gdf_instance.github_token, "Huformation")
+        get_branch_instance = GetBranch(user_gdf_token, "Huformation")
         
         body = get_branch_instance.get_branch
-
         return Response(body, status=status.HTTP_200_OK)
 
     except ObjectDoesNotExist:
-        return Response(status.HTTP_401_UNAUTHORIZED)
-    except Exception:
-        return Response(status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response(str(e), status.HTTP_500_INTERNAL_SERVER_ERROR)
