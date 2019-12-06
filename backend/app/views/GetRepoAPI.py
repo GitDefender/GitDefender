@@ -1,9 +1,10 @@
 from rest_framework import viewsets, permissions, generics, status
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from knox.auth import TokenAuthentication
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from knox.auth import TokenAuthentication
 from app.views import swagger_collection as sche
 from app.library.get_repository import GetRepository
 from app.models import GdfUser
@@ -15,7 +16,7 @@ from app.serializers import (
 
 class GetRepositoryView(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated]
-    authentication_classes = (TokenAuthentication,)
+    authentication_classes = [TokenAuthentication]
     serializer_class = GetRepositorySerializer
 
     test_param = openapi.Parameter('', openapi.IN_QUERY, description="Github Repository full name", type=openapi.TYPE_STRING)
@@ -29,7 +30,9 @@ class GetRepositoryView(generics.RetrieveAPIView):
     def get(self,request):
         try:
             models_username = request.user.get_username()
-            user_gdf = GdfUser.objects.get(username=models_username)
+            user_gdf_token = request.headers['Authorization'].replace("Token", "").strip()
+            print(models_username)
+            user_gdf = GdfUser.objects.get(gitdefender_token=user_gdf_token)
 
             user_tok = "Token " + user_gdf.github_token
             get_repo_instance = GetRepository(user_tok)
@@ -38,9 +41,14 @@ class GetRepositoryView(generics.RetrieveAPIView):
 
             return Response(body, status=status.HTTP_200_OK)
 
+        except ObjectDoesNotExist as e:
+            body = dict(
+                message=e
+            )
+            return Response(json.dumps(body), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         except Exception as e:
             body = dict(
                 message=e
             )
 
-            return Response(body, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(json.dumps(body), status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -77,7 +77,7 @@ class CrawlTool:
     def github_username(self, gdf_token):
         # gdf_token -> github_username
         try:
-            return GdfUser.objects.get(gdf_token = gdf_token).github_username
+            return GdfUser.objects.get(gitdefender_token = gdf_token).github_username
         except:
             return ""
 
