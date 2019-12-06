@@ -7,3 +7,4 @@ from .UserAPI import *
 from .oauth2_callback import *
 from .GetRepoAPI import *
 from .GetBranchAPI import *
+from .GetCodeDetectAPI import *
