@@ -11,13 +11,13 @@ class GetBranch(CrawlTool):
     >>> data = GetBranch("GITHUBTOKEN_WITHOUT_-Token -_prefix", 'Huformation')
     >>> print(data.branch)
     """
-    def __init__(self, github_tok, reponame):
+    def __init__(self, gitdefender_tok, reponame):
         CrawlTool.__init__(self)
         self.branches = list()
         self.branch_list = None
-        self.user_token = github_tok
-        
-        username = self.github_username
+        self.user_token = gitdefender_tok
+        username = self.github_username(self.user_token)
+
         self.api_route = "/repos/" + str(username) + "/" + str(reponame) + "/branches"
         self.branches = self._get()
 
@@ -26,6 +26,7 @@ class GetBranch(CrawlTool):
         data = result.json()
 
         try:
+            print(data)
             branch_list = list(map(lambda x:x['name'], data))
             return branch_list
         except ObjectDoesNotExist:
@@ -33,7 +34,7 @@ class GetBranch(CrawlTool):
 
     @property
     def get_branch(self):
-        return self.branches
+        return dict(branches=self.branches)
 
 if __name__ == "__main__":
     doctest.testmod()
