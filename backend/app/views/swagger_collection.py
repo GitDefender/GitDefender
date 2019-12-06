@@ -10,16 +10,18 @@ class ErrorResponseCollection(object):
         return '\n\n> **%s**\n\n```\n{\n\n\t"%s": "%s"\n\n}\n\n```' % \
                (self.message, self.param, self.message)
 
+GET_401 = ErrorResponseCollection(
+    status= 401,
+    message = "Authentication credentials were not provided.",
+    param = "detail"
+)
+
 GET_REPO_STATUS_404 = ErrorResponseCollection(
     status = 404,
     message = "NOT FOUND"
 )
 
-GET_REPO_STATUS_403 = ErrorResponseCollection(
-    status= 403,
-    message = "Authentication credentials were not provided.",
-    param = "detail"
-)
+
 
 class ResponseCollection(object):
     def __init__(self, message=None, data=None):
@@ -64,9 +66,55 @@ GET_REPO_STATUS_200 = ResponseCollection(
 )
 
 
-GET_DETECT_STATUS_200 = ResponseCollection(
+GET_CODE_DETECT_STATUS_200 = ResponseCollection(
     message = "HTTP_200_OK",
     data = {
-        ""
+        "Repository_name": "mymyproject",
+        "branch": "master",
+        "commit": "qef88u3qo4t8y12h",
+
+        "key": [
+            {
+                "filename": "/daa.sh",
+                "Line": 239,
+                "code": "~~~~<CODE>~~~~~~~~"
+            },
+            {
+                "filename": "/~~/~~~.py",
+                "Line": 7,
+                "code": "Google_API_KEY = 19u429012u5few"
+            }
+        ],
+        "Token": [
+            {
+                "filename": "/da.sh",
+                "Line": 432,
+                "code": "~~~~<CODE>~~~~~~~~"
+            },
+        ],
+        "Config": [
+            {
+                "filename": "/~~/~~~.java",
+                "Line": 3159,
+                "code": "~~~~<CODE>~~~~"
+            },
+            {
+                "filename": "/~~/~~~.sh",
+                "Line": 2341,
+                "code": "~~~~<CODE>~~~~"
+            },
+        ],
+        "URL": [
+                        {
+                "filename": "",
+                "Line": 2,
+                "code": "~~~~<CODE>~~~~"
+            },
+            {
+                "filename": "/~~/~~~.sh",
+                "Line": 2341,
+                "code": "~~~~<CODE>~~~~"
+            },
+        ]
     }
 )

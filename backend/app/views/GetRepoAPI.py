@@ -23,7 +23,7 @@ class GetRepositoryView(generics.RetrieveAPIView):
     @swagger_auto_schema(operation_description="GET /api/v1/get_repository",
                 responses={
                     200: sche.GET_REPO_STATUS_200.as_md(),
-                    403: sche.GET_REPO_STATUS_403.as_md(),
+                    401: sche.GET_401.as_md(),
                     404: sche.GET_REPO_STATUS_404.as_md(),
                 })
     def get(self,request):

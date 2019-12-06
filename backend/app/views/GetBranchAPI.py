@@ -13,7 +13,8 @@ test_param = openapi.Parameter('repository_name', openapi.IN_QUERY, description=
 
 @swagger_auto_schema(method='get', manual_parameters=[test_param], operation_description="GET /api/v1/get_branch",
             responses={
-                200: sche.GET_BRANCH_STATUS_200.as_md()
+                200: sche.GET_BRANCH_STATUS_200.as_md(),
+                401: sche.GET_401.as_md()
             })
 @api_view(['GET'])
 @permission_classes((IsAuthenticated,))
