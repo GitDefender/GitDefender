@@ -9,6 +9,7 @@ from drf_yasg import openapi
 from app.views import swagger_collection as sche
 from app.models import GdfUser
 from app.library.get_branch import GetBranch
+from app.library.code_detect import GetCodeDetect
 
 test_param = [
     openapi.Parameter('repository_name', openapi.IN_QUERY, description="Github Repository's Full name", type=openapi.TYPE_STRING),
@@ -25,7 +26,13 @@ test_param = [
 @permission_classes((IsAuthenticated,))
 @authentication_classes([TokenAuthentication])
 def get_code_detect(request):
+    user_gdf_token = request.headers['Authorization'].replace("Token", "").strip()
+    # user gitdefender token
+    select_repo_name = request.GET['repository_name'].strip()
+    # target repository name
 
+    gcd_instance = GetCodeDetect(user_gdf_token, select_repo_name, None)
+    result = gcd_instance.detect()
 
     
-    return Response('1')
+    return Response(result, status=status.HTTP_200_OK)

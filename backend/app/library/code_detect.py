@@ -1,94 +1,120 @@
 import os
 import yara
-import time
 import git
-#from .crawl_tool_base import CrawlTool
-#from app.library.yara_detect.detect_core import DetectCore
+import subprocess
+from app.library.crawl_tool_base import CrawlTool
 
-class GetCodeDetect():
-    def __init__(self, param_gdf_token, param_repo_name, param_commit_sha, param_path):
+#from app.library.yara_detect.detect_core import DetectCore
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+class GetCodeDetect(CrawlTool):
+    def __init__(self, param_gdf_token, param_repo_name, param_commit_sha):
         #super().__init__(self)
         #self.username = self.github_username(self.user_token)
-        self.path = param_path
+        self.gdf_token = param_gdf_token
+        self.repo_name = param_repo_name
         self.file_list = list()
-        self.now_file = None
+        self.result = dict()
+        # yara_callback 에서 결과데이터 담음
 
-        self._get_file_list()
-        self._config_yara()
+        self.now_file = None
+        # callback에서 사용
+
+        self.yara_rule_file = BASE_DIR + "/app/library/yara_detect/Log_Keyword.yar"
+        #야라 룰셋 위치
+        self.yara_compield_rule_file = BASE_DIR + "/app/library/yara_detect/Log_Keyword"
+        #야라 룰 컴파일 된파일 저장위치
+        self.detect_path = BASE_DIR + '/app/library/yara_detect/'
 
         self._git_clone()
+        # repository clone job
+
+        self._get_file_list()
+        # get repository files with path
+
+        self._config_yara()
+        # compile yara rule
 
     def _git_clone(self):
-        pass
-    
+        #추후 commit url전달통한 https replace to https token 가능
+        response = subprocess.call(["git", "clone", "https://" + self.github_token(self.gdf_token) + "@github.com/"
+            + self.github_username(self.gdf_token) + "/" + self.repo_name + ".git"], 
+                cwd=self.detect_path)
+
+        if response != 0:
+            return -1
+
+        return 0
+
+
     def _get_file_list(self):
-        for top, dirs, files in os.walk('./yara_detect'):
+        for top, dirs, files in os.walk(self.detect_path + self.repo_name):
             for nm in files:    
                 print(top,nm)
                 self.file_list.append(os.path.join(top, nm))
 
     def _config_yara(self):
         rules = yara.compile(filepaths={
-            "log": "./yara_detect/Log_Keyword.yar",
+            "log": self.yara_rule_file,
         })
+        # yara rule 위치
 
-        rules.save("./yara_detect/Log_Keyword")
+        rules.save(self.yara_compield_rule_file)
+        
 
     def yara_callback(self, data):
-        if data['matches'] == True:
-            print(self.now_file)
-            #print(data)
-            print(data['strings'])
+        print(data['matches'])
+        print(self.file_list)
+        if (data['matches'] == True) or (data['matches'] == False):
+            #print(self.now_file)
+            #print(data['strings'])
+
+            self.result[data['rule']] = list()
             with open(self.now_file) as f:
                 count = 0
-                print("count",count)
+                #print("count",count)
                 try:
                     file_offset = list(map(lambda x:int(x[0]), data['strings']))
                     file_line = f.readlines()
                     for index, fl in enumerate(file_line):
                         count += len(fl)
                         min_offset = min(file_offset)
-                        print("offset", file_offset)
-                        print("min_offset", min(file_offset))
+                        #print("offset", file_offset)
+                        #print("min_offset", min(file_offset))
                         if count > min_offset:
 
-                            print(file_line[index-1])
-                            print(fl)
-                            print(file_line[index+1])
-
+                            #print(file_line[index-1])
+                            #print(fl)
+                            #print(file_line[index+1])
+                            self.result[data['rule']].append(
+                                dict(strings=data['strings'][0][2],
+                                    line1=file_line[index-1],
+                                    line2=file_line[index],
+                                    line3=file_line[index+1]
+                                )
+                            )
                             file_offset.remove(min_offset)
                             if len(file_offset) == 0:
                                 break
-                        
                 except Exception as e:
-                    print("--FAIL", e)
                     pass
-            #158을 검출하면 log__log가 나온다
-            # 이런식으로 찾을까
-            print("count", count)
+
         return yara.CALLBACK_ALL
 
-    def detect(self, target_folder):
-        rules = yara.load(target_folder)
+    def detect(self):
+        rules = yara.load(self.yara_compield_rule_file)
+        # 룰 파일
 
         for sourcefile in self.file_list:
+            print('-')
             self.now_file = sourcefile
             matches = rules.match(sourcefile, callback=self.yara_callback)
+            return self.result
 
-if __name__ == "__main__":
-    start_time = time.time()
-    gcd_instance = GetCodeDetect(None, 'huformation', None, '../../')
-    
-    end1 = time.time()
 
-    result = gcd_instance.detect('./yara_detect/Log_Keyword')
+"""
+gcd_instance = GetCodeDetect("<GitDefender User Token>", 'Repository Name', None)
+result = gcd_instance.detect()
 
-    end2 = time.time()
-
-    print("#1 : ", end1-start_time)
-    print("#2 : ", end2-start_time)
-
-    #print(result)
-
-        
+"""     
 
