@@ -1,10 +1,21 @@
+from django.core.exceptions import ObjectDoesNotExist
+from knox.models import AuthToken
+from app.models import GdfUser
+import doctest
 import json
 import os
+import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-
 class CrawlTool:
+    """
+    doctest checked.
+    >>> a = CrawTool()
+    >>> a.github_token = '1111'
+    ''
+    """
+
     def __init__(self, tok=None):
         self.__github_api_root = "https://api.github.com"
         self.__user_token = tok
@@ -63,3 +74,12 @@ class CrawlTool:
     def user_agent(self, agent_name):
         self.__user_agent = agent_name
 
+    def github_username(self, gdf_token):
+        # gdf_token -> github_username
+        try:
+            return GdfUser.objects.get(gitdefender_token = gdf_token).github_username
+        except:
+            return ""
+
+if __name__ == "__main__":
+    doctest.testmod()

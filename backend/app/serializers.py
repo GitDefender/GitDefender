@@ -1,3 +1,4 @@
+from rest_framework.settings import api_settings
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
@@ -28,7 +29,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ("id", "username", "git")
 
-
 class LoginUserSerializer(serializers.Serializer):
     username = serializers.CharField(help_text="your username")
     password = serializers.CharField(help_text="your password")
@@ -39,3 +39,31 @@ class LoginUserSerializer(serializers.Serializer):
             return user
         raise serializers.ValidationError("Unable to log in with provided credentials")
 
+class GetRepositorySerializer(serializers.Serializer):
+    class RepoField(serializers.DictField):
+        name = serializers.CharField(help_text="Repository name")
+        url = serializers.CharField(help_text="Repository URL")
+        latest_commit = serializers.DateField(format=api_settings.DATE_FORMAT)
+        latest_scan = serializers.DateField(format=api_settings.DATE_FORMAT)
+
+    
+    repositories = serializers.ListField(required=True, child=RepoField())
+    repository_size = serializers.IntegerField(required=True)
+
+    def to_representation(self, instance):
+        return instance
+
+
+
+class Oauth2Seriailizer(serializers.Serializer):
+    code = serializers.CharField(help_text="provided by Github")
+    username = serializers.CharField(help_text="Github username provided by Github")
+
+    def to_representation(self, instance):
+        return instance
+
+class GetBranchSerializer(serializers.Serializer):
+    branches = serializers.ListField(help_text="['master', 'develop', 'feature/~~/~~]")
+
+    def to_representation(self, instance):
+        return instance

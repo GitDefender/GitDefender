@@ -7,11 +7,12 @@ from django.contrib.auth.models import User
 from knox.models import AuthToken
 from knox.auth import TokenAuthentication
 
+from ..models import GdfUser    
 from ..serializers import (
     CreateUserSerializer,
     UserSerializer,
     LoginUserSerializer,
-    GdfUserSerializer
+    GdfUserSerializer,
 )
 
 class LoginAPI(generics.GenericAPIView):
@@ -22,17 +23,24 @@ class LoginAPI(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
+        usertoken = AuthToken.objects.create(user)[1]
+
+        gdf_instance= GdfUser.objects.get(username=user)
+        gdf_instance.gitdefender_token = usertoken
+        gdf_instance.save()
+        
         return Response(
             {
                 "user": UserSerializer(
                     user, context=self.get_serializer_context()
                 ).data,
-                "token": AuthToken.objects.create(user)[1],
+                "token": usertoken,
             }
         )
 
 class LogoutView(generics.GenericAPIView):
     authentication_classes = (TokenAuthentication,)
+    serializer_class = LoginUserSerializer
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, format=None):
@@ -70,12 +78,16 @@ class RegistrationAPI(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
 
+        user_token = AuthToken.objects.create(user)[1]
+
+        GdfUser.objects.create(username=request.data["username"], gitdefender_token=user_token)
+
         return Response(
             {
                 "user": UserSerializer(
                     user, context=self.get_serializer_context()
                 ).data,
-                "token": AuthToken.objects.create(user)[1],
+                "token": user_token,
                 #(instance, token)
             }
         )

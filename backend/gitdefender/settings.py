@@ -15,7 +15,7 @@ with open(BASE_DIR+'/gitdefender/key.json', 'r')  as key:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'app',
     'knox',
+    'drf_yasg',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -41,6 +43,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'gitdefender.urls'
@@ -80,6 +83,7 @@ WSGI_APPLICATION = 'gitdefender.wsgi.application'
 
 with open(BASE_DIR+'/gitdefender/key.json', 'r') as key:
     key = json.loads(   key.read())
+
     DATABASES = {
     'default': {
         'ENGINE': key['DB']['ENGINE'],
@@ -91,8 +95,38 @@ with open(BASE_DIR+'/gitdefender/key.json', 'r') as key:
     }
 }
 
+CORS_ORIGIN_ALLOW_ALL = True
 
+# MUST ONLY DEVELOP MODE
+CORS_ALLOW_CREDENTIALS = True
 
+"""
+# -production-
+
+CORS_ORIGIN_WHITELIST = [
+    'localhost:8000'
+]
+"""
+
+with open(BASE_DIR+'/gitdefender/key.json', 'r') as key:
+    key = json.loads(   key.read())
+
+    SWAGGER_SETTINGS = {
+        'VALIDATOR_URL': 'http://localhost:8189',
+        'USE_SESSION_AUTH': True,
+        'SECURITY_DEFINITIONS': {
+            'api_key': {
+                'type': 'apiKey',
+                'in': 'header',
+                'name': 'Authorization'
+            }
+        },
+        'OAUTH2_CONFIG': {
+        'clientId': key['CLIENT_ID'],
+        'clientSecret': key['CLIENT_SECRET'],
+        'appName':  key['USER_AGENT'],
+            },
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -112,6 +146,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
