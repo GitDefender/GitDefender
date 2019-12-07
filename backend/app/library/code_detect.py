@@ -76,26 +76,48 @@ class GetCodeDetect(CrawlTool):
                 try:
                     file_offset = list(map(lambda x:int(x[0]), data['strings']))
                     file_line = f.readlines()
+                    file_line_size = len(file_line)
                     for index, fl in enumerate(file_line):
                         count += len(fl)
                         min_offset = min(file_offset)
                         #print("offset", file_offset)
                         #print("min_offset", min(file_offset))
                         if count > min_offset:
-
-                            #print(file_line[index-1])
-                            #print(fl)
-                            #print(file_line[index+1])
-                            self.result[data['rule']].append(
-                                dict(strings=data['strings'][0][2],
-                                    line1=file_line[index-1],
-                                    line2=file_line[index],
-                                    line3=file_line[index+1]
+                            try:
+                                self.result[data['rule']].append(
+                                    dict(strings=data['strings'][0][2],
+                                        line1=file_line[index-1].replace('\t', '').replace('\n', ''),
+                                        line2=file_line[index].replace('\t', '').replace('\n', ''),
+                                        line3=file_line[index+1].replace('\t', '').replace('\n', ''),
+                                    )
                                 )
-                            )
+
+                            except Exception as e:
+                                try:
+                                    self.result[data['rule']].append(
+                                        dict(strings=data['strings'][0][2],
+                                            line1=file_line[index-2].replace('\t', '').replace('\n', ''),
+                                            line2=file_line[index-1].replace('\t', '').replace('\n', ''),
+                                            line3=file_line[index].replace('\t', '').replace('\n', ''),
+                                        )
+                                    )
+                                except Exception as e:
+                                    try:
+                                        self.result[data['rule']].append(
+                                            dict(strings=data['strings'][0][2],
+                                                line1=file_line[index].replace('\t', '').replace('\n', ''),
+                                                line2=file_line[index+1].replace('\t', '').replace('\n', ''),
+                                                line3=file_line[index+2].replace('\t', '').replace('\n', ''),
+                                            )
+                                        )
+                                    except Exception as e:
+                                        pass
+
                             file_offset.remove(min_offset)
+
                             if len(file_offset) == 0:
                                 break
+                            
                 except Exception as e:
                     pass
 
