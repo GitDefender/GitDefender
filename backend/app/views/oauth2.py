@@ -25,6 +25,6 @@ def oauth2(request):
         body = dict(message="Please GET with Authorization")
         return Response(body, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return redirect("https://github.com/login/oauth/authorize?"\
-        "scope=repo:status%20read:repo_hook%20read:org%20read:user%20user:email%20&" \
+        "scope=repo%20read:repo_hook%20read:org%20read:user%20user:email%20&" \
         "client_id=d220f1ce704075b77610" \
         "&state=" + user_gdf_token)
