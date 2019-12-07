@@ -1,50 +1,39 @@
-from rest_framework import viewsets, permissions, generics, status
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
-from rest_framework.permissions import IsAuthenticated ,BasePermission ,SAFE_METHODS
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-#from rest_framework.views import ListAPIView
-
+from rest_framework import status
 from knox.auth import TokenAuthentication
-from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.authtoken.models import Token
-
-from ..library.get_commit import crawl_commit
-from ..models import GdfUser
-import json
-
-# 로직 보여주기 
-# 응답할 내용을 적어주기
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+from app.views import swagger_collection as sche
+from app.models import GdfUser
+from app.library.get_commit import crawl_commit
+from app.library.crawl_tool_base import CrawlTool
 
 
+test_param = openapi.Parameter('repository_name', openapi.IN_QUERY, description="Github Repository full name", type=openapi.TYPE_STRING)
 
-    # 클래스 > 모든 인스턴스에서 공유되는 모든 attribute와 메서드를 위한것
-    #클래스 기반 APIView 사용
-   
+
+@swagger_auto_schema(method='get', manual_parameters=[test_param], operation_description="GET /api/v1/get_branch",
+            responses={
+                200: sche.GET_BRANCH_STATUS_200.as_md(),
+                401: sche.GET_401.as_md()
+            })   
   
-@api_view(['GET'])
 @permission_classes([IsAuthenticated])
 @authentication_classes([TokenAuthentication])
-
+@api_view(['GET'])
 def get_commit(request, format=None):
         try:
-            print("((((((((((((((((()))))))))))))))))")
-            models_username = request.user.get_username()
-            print("111111111111111111-----------------------")
+            user_gdf_token = request.headers['Authorization'].replace("Token", "").strip()
+            user_repo_name = request.GET['repository_name']
 
-            user_gdf = GdfUser.objects.get(username=models_username)
-            # 유저이름과 일치할때 
-            print("22222222222222222222-----------------------")
+            get_commit_instance = crawl_commit()
 
-            user_tok = "Token " + user_gdf.github_token
-
-            get_commit_instance = crawl_commit(user_tok)
-
-            body = get_commit_instance.get_commit()
+            body = get_commit_instance.get_commit(user_gdf_token,user_repo_name)
             print(body)
             return Response(body, status=status.HTTP_200_OK)
 
-        except Exception as e:
-            body = dict(
-            message=e
-                        )
-            return Response(body, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except ObjectDoesNotExist:
+            return Response(status.HTTP_404_NOT_FOUND)

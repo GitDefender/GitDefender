@@ -2,7 +2,6 @@ from django.urls import path, include
 from django.conf.urls import url
 
 from .views import oauth2, RegistrationAPI, LoginAPI, UserAPI, LogoutView, oauth2_callback
-from .views import get_repo
 from .views import get_commit
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -25,7 +24,7 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('auth/get_commit/', get_commit, name='commit'),
+    path('get_commit', get_commit, name='commit'),
     path('auth/oauth2', oauth2, name='oauth2'),
     path('auth/register', RegistrationAPI.as_view(), name='register'),
     path('auth/user', UserAPI.as_view(), name='user'),
