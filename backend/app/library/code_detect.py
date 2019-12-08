@@ -16,7 +16,9 @@ class GetCodeDetect(CrawlTool):
         self.branch_name = str(param_branch)
         self.commit_sha = str(param_commit_sha)
         self.file_list = list()
+        
         self.result = dict()
+        self.result['category'] = list()
         # yara_callback 에서 결과데이터 담음
 
         self.now_file = None
@@ -67,11 +69,12 @@ class GetCodeDetect(CrawlTool):
     def yara_callback(self, data):
         #print(data['matches'])
         #print(self.file_list)
-        if (data['matches'] == True) or (data['matches'] == False):
+        if data['matches'] == True:
             #print(self.now_file)
             #print(data['strings'])
 
             self.result[data['rule']] = list()
+            self.result['category'].append(data['rule'])
             with open(self.now_file) as f:
                 count = 0
                 #print("count",count)
