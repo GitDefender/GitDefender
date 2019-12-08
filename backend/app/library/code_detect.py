@@ -13,6 +13,7 @@ class GetCodeDetect(CrawlTool):
         #self.username = self.github_username(self.user_token)
         self.gdf_token = param_gdf_token
         self.repo_name = param_repo_name
+        self.commit_sha = param_commit_sha
         self.file_list = list()
         self.result = dict()
         # yara_callback 에서 결과데이터 담음
@@ -40,10 +41,10 @@ class GetCodeDetect(CrawlTool):
         response = subprocess.call(["git", "clone", "https://" + self.github_token(self.gdf_token) + "@github.com/"
             + self.github_username(self.gdf_token) + "/" + self.repo_name + ".git"], 
                 cwd=self.detect_path)
-
-        if response != 0:
+        response_2 = subprocess.call(["git", "reset", "--soft", self.commit_sha], cwd=self.detect_path+self.repo_name)
+        
+        if (response != 0) or (response_2 != 0):
             return -1
-
         return 0
 
 
@@ -63,8 +64,8 @@ class GetCodeDetect(CrawlTool):
         
 
     def yara_callback(self, data):
-        print(data['matches'])
-        print(self.file_list)
+        #print(data['matches'])
+        #print(self.file_list)
         if (data['matches'] == True) or (data['matches'] == False):
             #print(self.now_file)
             #print(data['strings'])

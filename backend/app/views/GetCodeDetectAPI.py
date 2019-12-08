@@ -28,10 +28,13 @@ test_param = [
 def get_code_detect(request):
     user_gdf_token = request.headers['Authorization'].replace("Token", "").strip()
     # user gitdefender token
-    select_repo_name = request.GET['repository_name'].strip()
+    select_repo_name = request.GET['repository_name'].replace('&&','').replace(";", "").strip()
     # target repository name
+    branch = request.GET['branch'].replace('&&','').replace(";", "").strip()
+    commit_sha = request.GET['commit_sha'].replace('&&','').replace(";", "").strip()
+    # target repo commit
 
-    gcd_instance = GetCodeDetect(user_gdf_token, select_repo_name, None)
+    gcd_instance = GetCodeDetect(user_gdf_token, select_repo_name, branch, commit_sha)
     result = gcd_instance.detect()
 
     
