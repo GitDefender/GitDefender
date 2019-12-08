@@ -11,9 +11,9 @@ class GetCodeDetect(CrawlTool):
     def __init__(self, param_gdf_token, param_repo_name, param_commit_sha):
         #super().__init__(self)
         #self.username = self.github_username(self.user_token)
-        self.gdf_token = param_gdf_token
-        self.repo_name = param_repo_name
-        self.commit_sha = param_commit_sha
+        self.gdf_token = str(param_gdf_token)
+        self.repo_name = str(param_repo_name)
+        self.commit_sha = str(param_commit_sha)
         self.file_list = list()
         self.result = dict()
         # yara_callback 에서 결과데이터 담음
@@ -51,7 +51,7 @@ class GetCodeDetect(CrawlTool):
     def _get_file_list(self):
         for top, dirs, files in os.walk(self.detect_path + self.repo_name):
             for nm in files:    
-                print(top,nm)
+                #print(top,nm)
                 self.file_list.append(os.path.join(top, nm))
 
     def _config_yara(self):
@@ -129,7 +129,7 @@ class GetCodeDetect(CrawlTool):
         # 룰 파일
 
         for sourcefile in self.file_list:
-            print('-')
+            #print('-')
             self.now_file = sourcefile
             matches = rules.match(sourcefile, callback=self.yara_callback)
             return self.result

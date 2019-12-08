@@ -30,10 +30,16 @@ def get_code_detect(request):
     # user gitdefender token
     select_repo_name = request.GET['repository_name'].replace('&&','').replace(";", "").strip()
     # target repository name
-    branch = request.GET['branch'].replace('&&','').replace(";", "").strip()
-    commit_sha = request.GET['commit_sha'].replace('&&','').replace(";", "").strip()
-    # target repo commit
-
+    try:
+        branch = request.GET['branch'].replace('&&','').replace(";", "").strip()
+    except:
+        branch = "master"
+        
+    try:
+        commit_sha = request.GET['commit_sha'].replace('&&','').replace(";", "").strip()
+        # target repo commit
+    except:
+        commit_sha = None
     gcd_instance = GetCodeDetect(user_gdf_token, select_repo_name, branch, commit_sha)
     result = gcd_instance.detect()
 
