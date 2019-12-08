@@ -32,7 +32,8 @@ INSTALLED_APPS = [
     'app',
     'knox',
     'drf_yasg',
-    'corsheaders'
+    'corsheaders',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [

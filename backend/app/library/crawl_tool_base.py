@@ -1,5 +1,4 @@
 from django.core.exceptions import ObjectDoesNotExist
-from knox.models import AuthToken
 from app.models import GdfUser
 import doctest
 import json

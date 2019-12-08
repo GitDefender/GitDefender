@@ -5,7 +5,7 @@ from .crawl_tool_base import CrawlTool
 
 class GetRepository(CrawlTool):
     def __init__(self, param_github_tok, param_github_agent="GitDefender"):
-        CrawlTool.__init__(self)
+        super().__init__(self)
         self.user_token = param_github_tok
         self.user_agent = param_github_agent
         self.__repositories = None
