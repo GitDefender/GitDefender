@@ -8,11 +8,12 @@ from app.library.crawl_tool_base import CrawlTool
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 class GetCodeDetect(CrawlTool):
-    def __init__(self, param_gdf_token, param_repo_name, param_commit_sha):
+    def __init__(self, param_gdf_token, param_repo_name, param_branch, param_commit_sha):
         #super().__init__(self)
         #self.username = self.github_username(self.user_token)
         self.gdf_token = str(param_gdf_token)
         self.repo_name = str(param_repo_name)
+        self.branch_name = str(param_branch)
         self.commit_sha = str(param_commit_sha)
         self.file_list = list()
         self.result = dict()
