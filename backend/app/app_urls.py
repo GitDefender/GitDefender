@@ -1,7 +1,5 @@
 from django.urls import path, include
 from django.conf.urls import url
-
-from .views import oauth2, RegistrationAPI, LoginAPI, UserAPI, LogoutView, oauth2_callback
 from .views import get_commit
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view

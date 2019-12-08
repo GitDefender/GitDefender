@@ -16,7 +16,7 @@ test_param = openapi.Parameter('repository_name', openapi.IN_QUERY, description=
 test_param1 = openapi.Parameter('repository_branch', openapi.IN_QUERY, description="Github Repository branch full name", type=openapi.TYPE_STRING)
 
 
-@swagger_auto_schema(method='get', manual_parameters=[test_param]and[test_param1], operation_description="GET /api/v1/get_branch",
+@swagger_auto_schema(method='get', manual_parameters=[test_param]and[test_param1], operation_description="GET /api/v1/get_commit",
             responses={
                 200: sche.GET_BRANCH_STATUS_200.as_md(),
                 401: sche.GET_401.as_md()
