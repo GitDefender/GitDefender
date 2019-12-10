@@ -80,5 +80,12 @@ class CrawlTool:
         except:
             return ""
 
+    def github_token(self, gdf_token):
+        # gdf_token -> github_username
+        try:
+            return GdfUser.objects.get(gitdefender_token = gdf_token).github_token
+        except:
+            return ""
+
 if __name__ == "__main__":
     doctest.testmod()

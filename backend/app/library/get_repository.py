@@ -29,7 +29,9 @@ class GetRepository(CrawlTool):
 
         params = {
             'client_id':self.client_id,
-            'client_secret': self.client_secret
+            'client_secret': self.client_secret,
+            'sort': 'updated',
+            'visibility': 'all'
             }
 
         res = requests.get(self.github_api_root + self.api_route, \
