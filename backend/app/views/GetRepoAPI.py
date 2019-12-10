@@ -14,12 +14,16 @@ from app.serializers import (
     GetRepositorySerializer
 )
 
+
 class GetRepositoryView(generics.RetrieveAPIView):
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [TokenAuthentication]
     serializer_class = GetRepositorySerializer
 
-    test_param = openapi.Parameter('', openapi.IN_QUERY, description="Github Repository full name", type=openapi.TYPE_STRING)
+    test_param = [
+        openapi.Parameter('page', openapi.IN_QUERY, description="Github Repository page", type=openapi.TYPE_STRING),
+        openapi.Parameter('per_page', openapi.IN_QUERY, description="Github Repository amount of a page", type=openapi.TYPE_STRING)
+    ]
 
     @swagger_auto_schema(operation_description="GET /api/v1/get_repository",
                 responses={
@@ -31,11 +35,22 @@ class GetRepositoryView(generics.RetrieveAPIView):
         try:
             models_username = request.user.get_username()
             user_gdf_token = request.headers['Authorization'].replace("Token", "").strip()
-            print(models_username)
+
+            try:
+                page = request.GET['page']
+            except:
+                page = 1
+
+            try:
+                per_page = request.GET['per_page']
+            except:
+                per_page = 10
+
             user_gdf = GdfUser.objects.get(gitdefender_token=user_gdf_token)
 
             user_tok = "Token " + user_gdf.github_token
-            get_repo_instance = GetRepository(user_tok)
+
+            get_repo_instance = GetRepository(param_github_tok=user_tok, page=page, per_page=per_page)
 
             body = get_repo_instance.get_repo()
 
