@@ -726,3 +726,5 @@ backend/app/migrations/
 backend/app/library/yara_scan/
 
 backend/app/library/yara_detect/
+
+backend/gitdefender/key.json
