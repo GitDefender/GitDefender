@@ -1,6 +1,5 @@
 import os
 import yara
-import git
 import subprocess
 from app.library.crawl_tool_base import CrawlTool
 

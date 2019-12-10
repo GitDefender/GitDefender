@@ -25,7 +25,7 @@ class GetRepositoryView(generics.RetrieveAPIView):
         openapi.Parameter('per_page', openapi.IN_QUERY, description="Github Repository amount of a page", type=openapi.TYPE_STRING)
     ]
 
-    @swagger_auto_schema(operation_description="GET /api/v1/get_repository",
+    @swagger_auto_schema(operation_description="GET /api/v1/get_repository", manual_parameters=test_param,
                 responses={
                     200: sche.GET_REPO_STATUS_200.as_md(),
                     401: sche.GET_401.as_md(),
