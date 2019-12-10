@@ -1,3 +1,5 @@
+import re
+
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated
@@ -28,7 +30,12 @@ test_param = [
 def get_code_detect(request):
     user_gdf_token = request.headers['Authorization'].replace("Token", "").strip()
     # user gitdefender token
-    select_repo_name = request.GET['repository_name'].replace('&&','').replace(";", "").strip()
+
+    if re.match("[A-za-z0-9]+(?:[._-][a-z0-9]+)*", request.GET['repository_name']) is None:
+        return Response(dict(message="BAD REPO NAME"), status=status.HTTP_400_BAD_REQUEST)
+    else:
+        select_repo_name = request.GET['repository_name']
+    
     # target repository name
     try:
         branch = request.GET['branch'].replace('&&','').replace(";", "").strip()
@@ -40,6 +47,7 @@ def get_code_detect(request):
         # target repo commit
     except:
         commit_sha = None
+        
     gcd_instance = GetCodeDetect(user_gdf_token, select_repo_name, branch, commit_sha)
     result = gcd_instance.detect()
 
