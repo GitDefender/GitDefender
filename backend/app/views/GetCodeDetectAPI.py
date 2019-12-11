@@ -35,18 +35,12 @@ def get_code_detect(request):
         return Response(dict(message="BAD REPO NAME"), status=status.HTTP_400_BAD_REQUEST)
     else:
         select_repo_name = request.GET['repository_name']
-    
     # target repository name
-    try:
-        branch = request.GET['branch'].replace('&&','').replace(";", "").strip()
-    except:
-        branch = "master"
-        
-    try:
-        commit_sha = request.GET['commit_sha'].replace('&&','').replace(";", "").strip()
-        # target repo commit
-    except:
-        commit_sha = None
+
+    branch = request.GET.get('branch', 'master').replace('&&','').replace(";", "").strip()
+    # target repository branch
+    commit_sha = request.GET.get('commit_sha', None).replace('&&','').replace(";", "").strip()
+    # target repo commit
         
     gcd_instance = GetCodeDetect(user_gdf_token, select_repo_name, branch, commit_sha)
     result = gcd_instance.detect()

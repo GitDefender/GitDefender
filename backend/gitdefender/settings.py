@@ -110,7 +110,7 @@ CORS_ORIGIN_WHITELIST = [
 """
 
 with open(BASE_DIR+'/gitdefender/key.json', 'r') as key:
-    key = json.loads(   key.read())
+    key = json.loads(key.read())
 
     SWAGGER_SETTINGS = {
         'VALIDATOR_URL': 'http://localhost:8189',

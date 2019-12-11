@@ -36,15 +36,8 @@ class GetRepositoryView(generics.RetrieveAPIView):
             models_username = request.user.get_username()
             user_gdf_token = request.headers['Authorization'].replace("Token", "").strip()
 
-            try:
-                page = request.GET['page']
-            except:
-                page = 1
-
-            try:
-                per_page = request.GET['per_page']
-            except:
-                per_page = 10
+            page = request.GET.get('page', 1)
+            per_page = request.GET.get('per_page', 10)
 
             user_gdf = GdfUser.objects.get(gitdefender_token=user_gdf_token)
 
