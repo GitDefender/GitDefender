@@ -8,3 +8,4 @@ from .oauth2_callback import *
 from .GetRepoAPI import *
 from .GetBranchAPI import *
 from .GetCodeDetectAPI import *
+from .GetCommitAPI import *
