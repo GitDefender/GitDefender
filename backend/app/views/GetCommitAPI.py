@@ -20,10 +20,9 @@ test_param1 = openapi.Parameter('repository_branch', openapi.IN_QUERY, descripti
                 200: sche.GET_BRANCH_STATUS_200.as_md(),
                 401: sche.GET_401.as_md()
             })   
-  
+@api_view(['GET'])
 @permission_classes([IsAuthenticated])
 @authentication_classes([TokenAuthentication])
-@api_view(['GET'])
 def get_commit(request, format=None):
         try:
             user_gdf_token = request.headers['Authorization'].replace("Token", "").strip()

@@ -13,7 +13,7 @@ class crawl_commit(CrawlTool):
         self.user_token = gitdefender_tok
         repo_user = self.github_username(self.user_token)
 
-        self.api_route = "/repos/" + repo_user + "/" + repo_name + "/branches/" + repo_branch
+        self.api_route = "/repos/" + repo_user + "/" + repo_name + "/commits"
 
         headers = {'Content-Type': 'application/json; charset=utf-8',
             'Authorization': self.user_token,
