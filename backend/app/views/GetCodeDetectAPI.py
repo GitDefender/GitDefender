@@ -39,8 +39,11 @@ def get_code_detect(request):
 
     branch = request.GET.get('branch', 'master').replace('&&','').replace(";", "").strip()
     # target repository branch
-    commit_sha = request.GET.get('commit_sha', None).replace('&&','').replace(";", "").strip()
+    try:
+        commit_sha = request.GET.get('commit_sha').replace('&&','').replace(";", "").strip()
     # target repo commit
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
         
     gcd_instance = GetCodeDetect(user_gdf_token, select_repo_name, branch, commit_sha)
     result = gcd_instance.detect()

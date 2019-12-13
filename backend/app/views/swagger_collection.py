@@ -69,13 +69,15 @@ GET_REPO_STATUS_200 = ResponseCollection(
 GET_CODE_DETECT_STATUS_200 = ResponseCollection(
     message = "HTTP_200_OK",
     data = {
-        "Repository_name": "mymyproject",
-        "branch": "master",
-        "commit": "qef88u3qo4t8y12h",
+        "category": [
+            "key",
+            "Token",
+            "Config",
+            "~~~~",
+        ],
 
         "key": [
             {
-                "filename": "/daa.sh",
                 "Line": 239,
                 "code": "~~~~<CODE>~~~~~~~~"
             },
