@@ -70,52 +70,74 @@ GET_CODE_DETECT_STATUS_200 = ResponseCollection(
     message = "HTTP_200_OK",
     data = {
         "category": [
-            "key",
+            "log_",
             "Token",
-            "Config",
-            "~~~~",
+            "룰추가따라 늘어남",
+            "..."
         ],
 
-        "key": [
+        "log_": [
             {
-                "Line": 239,
-                "code": "~~~~<CODE>~~~~~~~~"
-            },
-            {
-                "filename": "/~~/~~~.py",
-                "Line": 7,
-                "code": "Google_API_KEY = 19u429012u5few"
+                "file_name": ".gitignore",
+                "line_number": 1,
+                "strings": "a",
+                "line1": "",
+                "line2": "# Created by https://www.gitignore.io/api/git,python,django,pycharm+all",
+                "line3": "## HUFORMATION ##"
             }
         ],
         "Token": [
             {
-                "filename": "/da.sh",
-                "Line": 432,
-                "code": "~~~~<CODE>~~~~~~~~"
+                "file_name": "파일이름",
+                "line_number": 10,
+                "strings": "ddddd",
+                "line1": "탐지 줄 앞",
+                "line2": "탐지된 줄",
+                "line3": "탐지줄 다음"
+            },
+            {
+                "file_name": ".gitignore",
+                "line_number": 1,
+                "strings": "a",
+                "line1": "",
+                "line2": "# Created by https://www.gitignore.io/api/git,python,django,pycharm+all",
+                "line3": "## HUFORMATION ##"
+            }
+        ],
+        "룰추가따라 늘어남": [
+            {
+                "file_name": "파일이름",
+                "line_number": 302,
+                "strings": "ddddd",
+                "line1": "탐지 줄 앞",
+                "line2": "탐지된 줄",
+                "line3": "탐지줄 다음"
+            },
+            {
+                "file_name": ".gitignore",
+                "line_number": 1,
+                "strings": "a",
+                "line1": "aa",
+                "line2": "~~a~~~",
+                "line3": "다음줄"
+            },
+            {
+                "file_name": ".gitignore",
+                "line_number": 1,
+                "strings": "a",
+                "line1": "aa",
+                "line2": "~~a~~~",
+                "line3": "다음줄"
             },
         ],
-        "Config": [
+        "...": [
             {
-                "filename": "/~~/~~~.java",
-                "Line": 3159,
-                "code": "~~~~<CODE>~~~~"
-            },
-            {
-                "filename": "/~~/~~~.sh",
-                "Line": 2341,
-                "code": "~~~~<CODE>~~~~"
-            },
-        ],
-        "URL": [
-                        {
-                "filename": "",
-                "Line": 2,
-                "code": "~~~~<CODE>~~~~"
-            },
-            {
-                "filename": "/~~/~~~.sh",
-                "Line": 2341,
-                "code": "~~~~<CODE>~~~~"
+                "file_name": ".gitignore",
+                "line_number": 1,
+                "strings": "a",
+                "line1": "aa",
+                "line2": "~~a~~~",
+                "line3": "다음줄"
             },
         ]
     }
