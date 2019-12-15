@@ -65,6 +65,42 @@ GET_REPO_STATUS_200 = ResponseCollection(
     }
 )
 
+GET_COMMIT_STATUS_200 = ResponseCollection(
+    message = "HTTP_200_OK",
+    data ={
+   "name": "master",
+    "commit": {
+        "sha": "956425010b97571286b568432f63395d18a49e05",
+        "node_id": "MDY6Q29tbWl0MjI1NDI1ODAwOjk1NjQyNTAxMGI5NzU3MTI4NmI1Njg0MzJmNjMzOTVkMThhNDllMDU=",
+        "commit": {
+            "author": {
+                "name": "youjin",
+                "email": "yujin5836@gmail.com",
+                "date": "2019-12-02T17:30:29Z"
+            },
+            "committer": {
+                "name": "youjin",
+                "email": "yujin5836@gmail.com",
+                "date": "2019-12-02T17:30:29Z"
+            },
+            "message": "fix : parse.py ",
+            "tree": {
+                "sha": "2ef8605db9b2cfef0215549acd14f52723450562",
+                "url": "https://api.github.com/repos/u0jin/data_go_kr_api/git/trees/2ef8605db9b2cfef0215549acd14f52723450562"
+            },
+            "url": "https://api.github.com/repos/u0jin/data_go_kr_api/git/commits/956425010b97571286b568432f63395d18a49e05",
+            "comment_count": 0,
+            "verification": {
+                "verified": "false",
+                "reason": "unsigned",
+                "signature": "null",
+                "payload": "null"
+            }
+        }
+    }
+    }
+)
+
 
 GET_CODE_DETECT_STATUS_200 = ResponseCollection(
     message = "HTTP_200_OK",
