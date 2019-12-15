@@ -24,9 +24,11 @@ def get_branch(request):
     try:
         user_gdf_token = request.headers['Authorization'].replace("Token", "").strip()
 
-        get_branch_instance = GetBranch(user_gdf_token, "Huformation")
+        repository = request.GET.get('repository_name', '')
+        get_branch_instance = GetBranch(user_gdf_token, repository)
         
         body = get_branch_instance.get_branch
+        
         return Response(body, status=status.HTTP_200_OK)
 
     except ObjectDoesNotExist:

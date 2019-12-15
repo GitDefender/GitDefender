@@ -1,6 +1,5 @@
 import os
 import yara
-import git
 import subprocess
 from app.library.crawl_tool_base import CrawlTool
 
@@ -23,6 +22,8 @@ class GetCodeDetect(CrawlTool):
 
         self.now_file = None
         # callback에서 사용
+
+        self.root_directory = BASE_DIR + '/app/library/yara_detect/' + self.repo_name + '/'
 
         self.yara_rule_file = BASE_DIR + "/app/library/yara_detect/Log_Keyword.yar"
         #야라 룰셋 위치
@@ -70,11 +71,14 @@ class GetCodeDetect(CrawlTool):
         #print(data['matches'])
         #print(self.file_list)
         if data['matches'] == True:
-            #print(self.now_file)
+            print(self.now_file)
             #print(data['strings'])
 
             self.result[data['rule']] = list()
             self.result['category'].append(data['rule'])
+            
+            self.file_show_name = self.now_file.replace(self.root_directory, '')
+
             with open(self.now_file) as f:
                 count = 0
                 #print("count",count)
@@ -90,7 +94,10 @@ class GetCodeDetect(CrawlTool):
                         if count > min_offset:
                             try:
                                 self.result[data['rule']].append(
-                                    dict(strings=data['strings'][0][2],
+                                    dict(
+                                        file_name=self.file_show_name,
+                                        line_number=index,
+                                        strings=data['strings'][0][2],
                                         line1=file_line[index-1].replace('\t', '').replace('\n', ''),
                                         line2=file_line[index].replace('\t', '').replace('\n', ''),
                                         line3=file_line[index+1].replace('\t', '').replace('\n', ''),
@@ -100,7 +107,10 @@ class GetCodeDetect(CrawlTool):
                             except Exception as e:
                                 try:
                                     self.result[data['rule']].append(
-                                        dict(strings=data['strings'][0][2],
+                                        dict(
+                                            file_name=self.file_show_name,
+                                            line_number=index,
+                                            strings=data['strings'][0][2],
                                             line1=file_line[index-2].replace('\t', '').replace('\n', ''),
                                             line2=file_line[index-1].replace('\t', '').replace('\n', ''),
                                             line3=file_line[index].replace('\t', '').replace('\n', ''),
@@ -109,7 +119,10 @@ class GetCodeDetect(CrawlTool):
                                 except Exception as e:
                                     try:
                                         self.result[data['rule']].append(
-                                            dict(strings=data['strings'][0][2],
+                                            dict(
+                                                file_name=self.file_show_name,
+                                                line_number=index,
+                                                strings=data['strings'][0][2],
                                                 line1=file_line[index].replace('\t', '').replace('\n', ''),
                                                 line2=file_line[index+1].replace('\t', '').replace('\n', ''),
                                                 line3=file_line[index+2].replace('\t', '').replace('\n', ''),
