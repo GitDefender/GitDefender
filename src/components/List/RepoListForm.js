@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Redirect} from "react-router-dom";
 import axios from 'axios';
 import "antd/dist/antd.css";
-import {Tabs, List, Button} from "antd";
+import {Tabs, List, Button, Row, Col, Table, Divider, Tag} from "antd";
 import RepoInfoList from "./RepoInfoList";
 import MainStructure from "../structure";
 
@@ -12,22 +12,54 @@ class RepoListForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            repositories: [
-                'https://github.com/khj0209/pcap_HW.git',
-                'https://github.com/khj0209/gitdifender.git',
-            ]
+            token: localStorage.getItem("token"),
+            repositories: [{
+                latest_commit: '2019-09-12',
+                latest_scan: '2019-09-15',
+                name: 'dogproject',
+                url: 'https://github.com/listExample.git'
+            },{
+                latest_commit: '2019-09-12',
+                latest_scan: '2019-09-15',
+                name: 'dogproject',
+                url: 'https://github.com/listExample.git'
+            },{
+                latest_commit: '2019-09-12',
+                latest_scan: '2019-09-15',
+                name: 'dogproject',
+                url: 'https://github.com/listExample.git'
+            },{
+                latest_commit: '2019-09-12',
+                latest_scan: '2019-09-15',
+                name: 'dogproject',
+                url: 'https://github.com/listExample.git'
+            },{
+                latest_commit: '2019-09-12',
+                latest_scan: '2019-09-15',
+                name: 'dogproject',
+                url: 'https://github.com/listExample.git'
+            },{
+                latest_commit: '2019-09-12',
+                latest_scan: '2019-09-15',
+                name: 'dogproject',
+                url: 'https://github.com/listExample.git'
+            }],
+            repositories_size: 1
         }
-        this.handleClick = this.handleClick.bind(this);
-        this.handleCheck = this.handleCheck.bind(this);
-        this.handleGet = this.handleGet.bind(this);
+        this.gitOauth = this.gitOauth.bind(this);
+        this.gitTokenCheck = this.gitTokenCheck.bind(this);
+        this.getRepsotories = this.getRepsotories.bind(this);
+        this.handleScan = this.handleScan.bind(this);
     }
 
-    handleCheck() {
+    gitTokenCheck() {
         const headers = {
-            "Access-Control-Allow-Headers": "*",
-            "Access-Control-Allow-Origin": "*",
-            'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem("token"),
+            "Access-Control-Allow-Headers": ["*"],
+            //"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
+            "Access-Control-Allow-Origin": '*',
+            "Access-contral-allow-Methods": '*',
+            'Content-Type': 'application/jsonp',
+            'Authorization': this.state.token
         };
 
         console.log("UserCheck Start")
@@ -37,25 +69,25 @@ class RepoListForm extends Component {
             }
         )
             .then(function (response) {
-                    console.log("UserCheck Success");
+                    console.log("gitTokenCheck Success");
                     console.log(response);
                 }
             )
             .catch(function (error) {
-                    console.log("UserCheck Fail");
+                    console.log("gitTokenCheck Fail");
                     console.log(error);
                 }
             );
     }
 
-    handleGet() {
-        this.handleCheck();
+    getRepsotories() {
+        this.gitTokenCheck();
 
         const headers = {
             "Access-Control-Allow-Headers": "*",
             "Access-Control-Allow-Origin": "*",
             'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem("token"),
+            'Authorization': this.state.token
         };
 
         console.log("GitHub_Token_Get_Start")
@@ -66,19 +98,95 @@ class RepoListForm extends Component {
         )
             .then(function (response) {
                     this.state.repositories = JSON.parse(response).repositories;
-                    console.log("GitHub_Token_Get_Success");
+                    console.log("getRepsotories_Success");
                     console.log(response);
                 }
             )
             .catch(function (error) {
-                    console.log("GitHub_Token_Get_Fail");
+                    console.log("getRepsotories_Fail");
                     console.log(error);
                 }
             );
     }
 
-    handleClick() {
-        const token_str = localStorage.getItem("token");
+    getBranch() {
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': this.state.token
+        };
+
+        console.log("GitHub_Token_Get_Start")
+        axios.get('http://test.gitdefender.com:8080/api/v1/get_branch',
+            {
+                headers
+            }
+        )
+            .then(function (response) {
+                    this.state.repositories = JSON.parse(response).repositories;
+                    console.log("getBranch_Success");
+                    console.log(response);
+                }
+            )
+            .catch(function (error) {
+                    console.log("getBranch_Fail");
+                    console.log(error);
+                }
+            );
+    }
+
+    getCommit() {
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': this.state.token
+        };
+
+        console.log("GitHub_Token_Get_Start")
+        axios.get('http://test.gitdefender.com:8080/api/v1/get_commit',
+            {
+                headers
+            }
+        )
+            .then(function (response) {
+                    this.state.repositories = JSON.parse(response).repositories;
+                    console.log("getCommit_Success");
+                    console.log(response);
+                }
+            )
+            .catch(function (error) {
+                    console.log("getCommit_Fail");
+                    console.log(error);
+                }
+            );
+
+    }
+
+    handleScan() {
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': this.state.token
+        };
+
+        console.log("GitHub_Token_Get_Start")
+        axios.get('http://test.gitdefender.com:8080/api/v1/get_code_detect',
+            {
+                headers
+            }
+        )
+            .then(function (response) {
+                    this.state.repositories = JSON.parse(response).repositories;
+                    console.log("handleScan_Success");
+                    console.log(response);
+                }
+            )
+            .catch(function (error) {
+                    console.log("handleScan_Fail");
+                    console.log(error);
+                }
+            );
+    }
+
+    gitOauth() {
+        const token_str = this.state.token;
         const token = token_str.substring(10, token_str.length - 2);
         window.location.assign(
             "https://github.com/login/oauth/authorize?" +
@@ -102,12 +210,49 @@ class RepoListForm extends Component {
             });
 
          */
-        console.log("handleClickTestFinish")
+        console.log("gitOauthTestFinish")
 
 
     }
 
     render() {
+        const column = [
+            {
+                title: 'Repository Name',
+                dataIndex: 'name',
+                render: text => <a>{text}</a>,
+            },
+            {
+                title: 'Latest Commit',
+                dataIndex: 'latest_commit',
+            },
+            {
+                title: 'Latest Scan',
+                dataIndex: 'latest_scan',
+            },
+            {
+                title: 'Repository URL',
+                dataIndex: 'url',
+            },
+            {
+                title: 'SCAN',
+                dataIndex: '',
+                render: (text, record) => (
+                    <span>
+                        <a>Scan</a>
+                    </span>
+                ),
+            },
+            {
+                title: 'Report',
+                dataIndex: '',
+                render: (text, record) => (
+                    <span>
+                        <a href={"/Report"}>Report</a>
+                    </span>
+                ),
+            }
+        ];
 
         return (
             <form>
@@ -116,50 +261,68 @@ class RepoListForm extends Component {
                         <div label="GitHub">
                             <Button size="large" type="primary"
                                     className={"GitHub OAuth"}
-                                /*onClick={this.handleClick}>*/
-                                    onClick={this.handleClick}>GitHub OAuth
+                                    onClick={this.gitOauth}>GitHub OAuth
                             </Button>
-                            <br/>
-                            <br/>
                             <Button size="large" type="primary"
                                     className={"GitHub check"}
-                                /*onClick={this.handleClick}>*/
-                                    onClick={this.handleCheck}>GitHub Token Check
+                                    onClick={this.gitTokenCheck}>
+                                GitHub Token Check
                             </Button>
-                            <br/>
-                            <br/>
                             <Button size="large" type="primary"
                                     className={"GitHub check"}
-                                /*onClick={this.handleClick}>*/
-                                    onClick={this.handleGet}>GitHub Get Repository
+                                    onClick={this.getRepsotories}>
+                                GitHub Get Repository
                             </Button>
-                            <List size="large" dataSource={this.state.repositories}
-                                  renderItem={item => (
-                                      <List.Item>
-                                          {item}
-                                      </List.Item>
-                                  )}
-                            >
-                            </List>
+                            <Table
+                                columns={column}
+                                dataSource={this.state.repositories}
+                            />
                         </div>
                     </TabPane>
 
                     <TabPane tab="GitLab" key="2">
                         <div label="GitLab">
                             <Button size="large" type="primary"
-                                    className={"GitLab OAuth"}>
-                                GitLab OAuth2
+                                    className={"GitLab OAuth"}
+                                    onClick={this.gitOauth}>GitLab OAuth
                             </Button>
-                            <List size="large">
-                            </List>
+                            <Button size="large" type="primary"
+                                    className={"GitHub check"}
+                                    onClick={this.gitTokenCheck}>
+                                GitLab Token Check
+                            </Button>
+                            <Button size="large" type="primary"
+                                    className={"GitHub check"}
+                                    onClick={this.getRepsotories}>
+                                GitLab Get Repository
+                            </Button>
+                            <Table
+                                columns={column}
+                                dataSource={this.state.repositories}
+                            />
                         </div>
                     </TabPane>
 
                     <TabPane tab="BitBucket" key="3">
                         <div label="BitBucket">
-                            <List/>
-                            <RepoListForm/>
-                            <RepoInfoList/>
+                            <Button size="large" type="primary"
+                                    className={"BitBucket OAuth"}
+                                    onClick={this.gitOauth}>BitBucket OAuth
+                            </Button>
+                            <Button size="large" type="primary"
+                                    className={"BitBucket check"}
+                                    onClick={this.gitTokenCheck}>
+                                BitBucket Token Check
+                            </Button>
+                            <Button size="large" type="primary"
+                                    className={"BitBucket check"}
+                                    onClick={this.getRepsotories}>
+                                BitBucket Get Repository
+                            </Button>
+                            <Table
+                                columns={column}
+                                dataSource={this.state.repositories}
+                            />
                         </div>
                     </TabPane>
                 </Tabs>
@@ -168,4 +331,36 @@ class RepoListForm extends Component {
     }
 }
 
+/*
+<Row>
+    <Col span={6}>Repository Name</Col>
+    <Col span={6}>Latest Commit</Col>
+    <Col span={6}>Latest Scan</Col>
+    <Col span={6}>URL</Col>
+</Row>
+<List size="large"
+      itemLayout="vertical"
+      dataSource={this.state.repositories}
+      renderItem={item =>
+          <div>
+              <List.Item
+                  style={{
+                      fontSize: 20,
+                      marginTop: 12,
+                      height: 200,
+                      lineHeight: '32px',
+                  }}>
+                  {item.name}<br/>
+                  {item.latest_commit}
+                  {item.latest_scan}
+                  {item.url}
+                  <div>
+                      <Button
+                          onClick={this.handleScan}
+                          type="primary"
+                          size="large">Scan</Button>
+                  </div>
+              </List.Item>
+          </div>
+      }/>*/
 export default RepoListForm;

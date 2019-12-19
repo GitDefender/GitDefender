@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import AuthForm from "../components/Auth/AuthForm";
 import {withRouter} from "react-router-dom";
 import * as authActions from "../modules/auth";
+import Header from "../components/structure/Header";
 
 export class AuthContainer extends Component {
     componentDidMount() {

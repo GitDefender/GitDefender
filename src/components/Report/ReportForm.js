@@ -1,12 +1,11 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import {Form, Input, Button} from "antd";
+import {Form, Icon, Input, Button, Checkbox} from "antd";
 import "antd/dist/antd.css";
-import "./auth.css"
 
 const FormItem = Form.Item;
 
-const AuthForm = (
+const ReportForm = (
     {
         kind,
         onChangeInput,
@@ -100,4 +99,4 @@ const AuthForm = (
     );
 };
 
-export default AuthForm;
+export default ReportForm;

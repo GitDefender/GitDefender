@@ -1,17 +1,16 @@
 import React from "react";
 import "antd/dist/antd.css";
-import axios from 'axios';
-import { Tabs, List, Button } from "antd";
-import MainStructure from "../components/structure";
+import HeaderContainer from "../containers/HeaderContainer";
+import ReportForm from "../components/Report/ReportForm";
 
-const Main = () => {
+const Report = () => {
     return (
-        <MainStructure>
-            <List>
-                <Button/>
-            </List>
-        </MainStructure>
+        <div>
+            <HeaderContainer>
+                <ReportForm/>
+            </HeaderContainer>
+        </div>
     )
 };
 
-export default Main;
+export default Report;
