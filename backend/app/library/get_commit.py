@@ -6,8 +6,9 @@ class crawl_commit(CrawlTool):
     def __init__(self):
         super().__init__(self)
 
-    def get_commit(self,gitdefender_tok,repo_name,repo_branch):
+    def get_commit(self,param_github_tok,repo_name,repo_branch):
         
+        self.user_token = param_github_tok
 
         headers = {
             'Content-Type': 'application/json; charset=utf-8',
@@ -23,6 +24,7 @@ class crawl_commit(CrawlTool):
             }
             
         repo_user = self.github_username(self.user_token)
+
         repo_url = "https://api.github.com/repos/" + repo_user + "/" + repo_name + "/commits"
 
         response = requests.get(repo_url, headers=headers, params=params)

@@ -68,12 +68,13 @@ GET_REPO_STATUS_200 = ResponseCollection(
 GET_COMMIT_STATUS_200 = ResponseCollection(
     message = "HTTP_200_OK",
     data ={
-        {'commit': [
+        'commit': [
             {'sha': '123133010b97571286b568432f63395d18a49e05', 
             'message': 'fix : remove comments and fix code'}, 
             {'sha': '312313fc750cdea348e23145948d2ee58e29f483b', 
             'message': 'Update : korea_api crawling and yara convert  Update : korea_api crawling and yara rule convert'}, 
             {'sha': '464d238123137e8502a455f97dca165cb2d28612', 'message': 'Initial commit'}]
+        
     }
 )
 
