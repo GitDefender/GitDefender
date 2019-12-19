@@ -1,0 +1,25 @@
+.header {
+    background: #E0E6F0;
+    height: 5rem;
+
+    display: flex;
+    align-items: center;
+}
+.logo {
+    color: black;
+    font-weight: 800;
+    font-size: 1.5rem;
+
+    cursor: pointer;
+    margin-left: 1rem;
+    user-select: none;
+}
+.logout {
+    margin-left: auto;
+    margin-right: 1rem;
+    color: black;
+
+    font-weight: 800;
+    font-size: 2rem;
+    cursor: pointer;
+}
