@@ -22,7 +22,18 @@ class GetBranch(CrawlTool):
         self.branches = self._get()
 
     def _get(self):
-        result = requests.get(self.github_api_root + self.api_route)
+        headers = {'Content-Type': 'application/json; charset=utf-8',
+            'Authorization': self.user_token,
+            'Accept': 'application/vnd.github.machine-man-preview+json',
+            'User-Agent': self.user_agent
+        }
+
+        params = {
+            'client_id':self.client_id,
+            'client_secret': self.client_secret,
+            }
+        result = requests.get(self.github_api_root + self.api_route
+            ,headers=headers, params=params)
         data = result.json()
 
         try:

@@ -20,10 +20,9 @@ test_param1 = openapi.Parameter('repository_branch', openapi.IN_QUERY, descripti
                 200: sche.GET_BRANCH_STATUS_200.as_md(),
                 401: sche.GET_401.as_md()
             })   
-  
+@api_view(['GET'])
 @permission_classes([IsAuthenticated])
 @authentication_classes([TokenAuthentication])
-@api_view(['GET'])
 def get_commit(request, format=None):
         try:
             user_gdf_token = request.headers['Authorization'].replace("Token", "").strip()
@@ -33,8 +32,7 @@ def get_commit(request, format=None):
             get_commit_instance = crawl_commit()
 
             body = get_commit_instance.get_commit(user_gdf_token,user_repo_name,user_repo_branch)
-            print(body)
             return Response(body, status=status.HTTP_200_OK)
 
         except ObjectDoesNotExist:
-            return Response(status.HTTP_404_NOT_FOUND)
+            return Response(status=status.HTTP_400_BAD_REQUEST)

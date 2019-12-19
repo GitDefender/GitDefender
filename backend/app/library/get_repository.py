@@ -4,13 +4,15 @@ import os
 from .crawl_tool_base import CrawlTool
 
 class GetRepository(CrawlTool):
-    def __init__(self, param_github_tok, param_github_agent="GitDefender"):
+    def __init__(self, param_github_tok, param_github_agent="GitDefender", page=1, per_page=10):
         super().__init__(self)
         self.user_token = param_github_tok
         self.user_agent = param_github_agent
         self.__repositories = None
         self.__repositories_index = None
         self.api_route = '/user/repos'
+        self.repo_page = page
+        self.repo_per_page = per_page
 
     def test(self):
         print("---test start----")
@@ -29,7 +31,11 @@ class GetRepository(CrawlTool):
 
         params = {
             'client_id':self.client_id,
-            'client_secret': self.client_secret
+            'client_secret': self.client_secret,
+            'sort': 'updated',
+            'visibility': 'all',
+            'page' : self.repo_page,
+            'per_page' : self.repo_per_page
             }
 
         res = requests.get(self.github_api_root + self.api_route, \
@@ -53,8 +59,8 @@ class GetRepository(CrawlTool):
 
                 params = {
                 'client_id':self.client_id,
-                'client_secret': self.client_secret
-                    }
+                'client_secret': self.client_secret,
+                }
 
                 try:
                     repo_commit_data = requests.get(commits_url, headers=headers, params=params).json()
