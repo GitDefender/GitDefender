@@ -6,34 +6,38 @@ class crawl_commit(CrawlTool):
     def __init__(self):
         super().__init__(self)
 
-    def get_commit(self,gitdefender_tok,repo_name,repo_branch):
-        commit_data = dict()
-        commit_data['commit'] = list()
+    def get_commit(self,param_github_tok,repo_name,repo_branch):
+        
+        self.user_token = param_github_tok
 
-        self.user_token = gitdefender_tok
-        repo_user = self.github_username(self.user_token)
-
-        self.api_route = "/repos/" + repo_user + "/" + repo_name + "/commits"
-
-        headers = {'Content-Type': 'application/json; charset=utf-8',
+        headers = {
+            'Content-Type': 'application/json; charset=utf-8',
             'Authorization': self.user_token,
             'Accept': 'application/vnd.github.machine-man-preview+json',
-            'User-Agent': self.user_agent
-        }
+            'User-Agent': "GitDefender"
+            }
 
         params = {
-            'client_id':self.client_id,
-            'client_secret': self.client_secret,
-        }
+            'sha' : repo_branch,
+            'client_id' : self.client_id,
+            'client_secret': self.client_secret
+            }
+            
+        repo_user = self.github_username(self.user_token)
 
-        response = requests.get(self.github_api_root + self.api_route, headers=headers, params=params)
+        repo_url = "https://api.github.com/repos/" + repo_user + "/" + repo_name + "/commits"
+
+        response = requests.get(repo_url, headers=headers, params=params)
         json_data = response.json()
 
-        value = dict(sha=json_data["commit"]["sha"], message=json_data["commit"]["commit"]["message"])
-        commit_data['commit'].append(value)
+        commit_data = dict()
+        commit_data['commit'] = list()
+        
+        for i in json_data :
+            value = dict(sha=i["sha"], message=i["commit"]["message"])
+            commit_data['commit'].append(value)
 
         return commit_data
-        
 
 if __name__ == "__main__":
     commit = crawl_commit()
