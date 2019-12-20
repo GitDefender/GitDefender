@@ -6,7 +6,7 @@ import {
 } from 'antd';
 import axios from 'axios';
 
-import { auth_login, auth_register } from './api.js';
+import { auth_login, auth_register, auth_logout } from './api.js';
 
 class Login extends Component {
     constructor(props) {
@@ -288,10 +288,65 @@ class Register extends Component {
         )
     }
 }
+
+class LogOut extends Component {
+    constructor(props){
+        super(props);
+        
+        this.state = {
+        }
+    }
+    
+    logout_process = () => {
+        axios.post(auth_logout,{
+            headers:{
+                Authorization: sessionStorage.getItem('GdfToken')
+            }
+        })
+        sessionStorage.clear();
+
+        this.setState(this.state);
+        return <Redirect to='/login'></Redirect>
+    }
+
+    render(){
+        return(
+            <a onClick={this.logout_process}>
+                LogOut
+            </a>
+        )
+    }
+
+}
+
+class LogIn extends Component {
+    constructor(props){
+        super(props);
+
+        this.state = {
+        }
+    }
+
+    login_process = () => {
+        this.setState(this.state);
+
+        return <Redirect to='/login'></Redirect>
+    }
+
+    render(){
+        return(
+            <a onClick={this.login_process}>Login</a>
+        )
+    }
+
+}
+
 const LoginForm = Form.create()(Login);
 const RegisterForm = Form.create()(Register);
 
 export {
     LoginForm,
-    RegisterForm
+    RegisterForm,
+    LogIn,
+    LogOut
 };

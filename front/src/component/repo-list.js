@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { Row, Col } from 'antd';
-import { Table, Divider, Tag, Icon, Alert, Pagination } from 'antd';
+import { Table, Divider, Tag, Icon, Alert, Pagination, Card} from 'antd';
 
 import axios from 'axios';
 
@@ -25,9 +25,26 @@ class RepoList extends Component {
     }
 
     componentDidMount() {
+        this.setState(this.state)
         this.GetRepository()
         this.GetRepository(2)
+        
     }
+
+    tabList = [
+        {
+            key: 'Github',
+            tab: 'Github',
+        },
+        {
+            key: 'Gitlab',
+            tab: 'Gitlab',
+        },
+        {
+            key: 'BitBucket',
+            tab: 'BitBucket',
+        },
+    ];
 
     GetRepository(page_) {
         axios.get(get_repository, {
@@ -41,8 +58,8 @@ class RepoList extends Component {
         })
             .then((response) => {
                 console.log(response)
-                
-                if(response.data.error_message=="Unvalid User Token"){
+
+                if (response.data.error_message == "Unvalid User Token") {
                     return ''
                 }
 
@@ -84,34 +101,46 @@ class RepoList extends Component {
     render() {
         return (
             <div>
-                {sessionStorage.getItem('GdfToken') ? <div>
-                {
-                    this.state.response == 200 ? '' : <Alert message="Invalid User Authorization"
-                        description="This is an error message about you are Unauthorized User"
-                        type="error"
-                        showIcon closable />
-                }
-                
-                <Table dataSource={this.state.data} pagination={{ pageSize: 5, onChange: this.paginationChange }}>
-                    <Column title="Repository name" dataIndex="name" key="name" />
-                    <Column title="Latest Commit Date" dataIndex="recent_commit_date" key="commit_date" />
-                    <Column title="Commit Message" dataIndex="recent_commit_message" key="commit_message" />
-                    <Column title="" dataIndex="scan" key="scan" />
-                    <Column title="" dataIndex="report" key="report" />
-                    <Column title="Secu-level" dataIndex="secure_level"
-                        key="secure_level"
-                        render={le => (
-                            le == "low" ? <Icon type="check-circle" theme="twoTone" twoToneColor='green' /> :
-                                le == "middle" ? <Icon type="check-circle" theme="twoTone" twoToneColor='orange' /> :
-                                    le == "high" ? <Icon type="check-circle" theme="twoTone" twoToneColor='red' /> : "0"
-                        )}
-                    // Security Level Icon set
-                    />
-                    <Pagination position='top' />
-                </Table>
-            </div> : <Redirect to='/login'/>}
+                <Card
+                    style={{ width: '100%' }}
+                    title={sessionStorage.getItem('name') + "'s Repository List"}
+                    tabList={this.tabList}
+                    activeTabKey={this.state.key}
+                    onTabChange={key => {
+                        '';
+                    }}
+                >
+                    {sessionStorage.getItem('GdfToken') ? <div>
+                        {
+                            this.state.response == 200 ? '' : <Alert message="Invalid User Authorization"
+                                description="This is an error message about you are Unauthorized User"
+                                type="error"
+                                showIcon closable />
+                        }
+
+                        <Table dataSource={this.state.data} pagination={{ pageSize: 5, onChange: this.paginationChange }}>
+                            <Column title="Repository name" dataIndex="name" key="name" />
+                            <Column title="Latest Commit Date" dataIndex="recent_commit_date" key="commit_date" />
+                            <Column title="Commit Message" dataIndex="recent_commit_message" key="commit_message" />
+                            <Column title="" dataIndex="scan" key="scan" />
+                            <Column title="" dataIndex="report" key="report" />
+                            <Column title="Secu-level" dataIndex="secure_level"
+                                key="secure_level"
+                                render={le => (
+                                    le == "low" ? <Icon type="check-circle" theme="twoTone" twoToneColor='green' /> :
+                                        le == "middle" ? <Icon type="check-circle" theme="twoTone" twoToneColor='orange' /> :
+                                            le == "high" ? <Icon type="check-circle" theme="twoTone" twoToneColor='red' /> : "0"
+                                )}
+                            // Security Level Icon set
+                            />
+                            <Pagination position='top' />
+                        </Table>
+                    </div> : <Redirect to='/login' />}
+                </Card>
+
+
             </div>
-            
+
         )
     }
 }
