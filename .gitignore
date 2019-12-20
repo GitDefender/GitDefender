@@ -1,3 +1,24 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # Created by https://www.gitignore.io/api/git,pydev,python,pycharm,windows,pycharm+all
 # Edit at https://www.gitignore.io/?templates=git,pydev,python,pycharm,windows,pycharm+all
@@ -297,6 +318,7 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/git,pydev,python,pycharm,windows,pycharm+all
+
 
 
 # Created by https://www.gitignore.io/api/git,django,windows,pycharm,visualstudiocode
