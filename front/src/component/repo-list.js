@@ -55,7 +55,7 @@ class RepoList extends Component {
     GetRepository(page_) {
         axios.get(get_repository, {
             headers: {
-                Authorization: "Token XXXXX" //will be replace to localStorage()
+                Authorization: localStorage.getItem('GdfToken')
             },
             params: {
                 page: page_ ? page_ : this.state.repository_index,
