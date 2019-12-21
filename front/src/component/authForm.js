@@ -312,7 +312,7 @@ class LogOut extends Component {
     render(){
         return(
             <a onClick={this.logout_process}>
-                LogOut
+                Sing Out
             </a>
         )
     }
@@ -335,7 +335,7 @@ class LogIn extends Component {
 
     render(){
         return(
-            <a onClick={this.login_process}>Login</a>
+            <a onClick={this.login_process}>Sign in</a>
         )
     }
 

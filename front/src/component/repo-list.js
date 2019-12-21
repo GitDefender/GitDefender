@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { Row, Col } from 'antd';
-import { Table, Divider, Tag, Icon, Alert, Pagination, Card} from 'antd';
+import { Table, Button, Icon, Alert, Pagination, Card } from 'antd';
 
 import axios from 'axios';
 
 import { get_repository } from './api.js';
+import Report from './report';
 
 const { Column, ColumnGroup } = Table;
 
@@ -26,9 +27,9 @@ class RepoList extends Component {
 
     componentDidMount() {
         this.setState(this.state)
-        this.GetRepository()
+        this.GetRepository(1)
         this.GetRepository(2)
-        
+
     }
 
     tabList = [
@@ -89,7 +90,7 @@ class RepoList extends Component {
     }
 
     paginationChange(page, pageSize) {
-        if (this.state.repository_index <= page) {
+        if (Number(this.state.repository_index) <= Number(page)) {
             this.setState({
                 repository_index: page
             })
@@ -98,7 +99,33 @@ class RepoList extends Component {
         }
     }
 
+
+    url(){
+        try {
+            let user_token = sessionStorage.getItem('GdfToken').replace("Token ", "");
+            let oauth2_url = "https://github.com/login/oauth/authorize?scope=repo%20read:repo_hook%20read:org%20read:user%20user:email%20\
+                &client_id=d220f1ce704075b77610&state=" + this.user_token;
+
+            this.setState({
+                oauth2_url: this.oauth2_url
+            })
+        } catch (error) {
+        }
+        
+    }
+    
+    
+
+
+    scan_process(props){
+        console.log(props)
+        let path = '/report' + ''
+
+        //return <Redirect to={path}/>
+    }
+
     render() {
+        
         return (
             <div>
                 <Card
@@ -108,22 +135,27 @@ class RepoList extends Component {
                     activeTabKey={this.state.key}
                     onTabChange={key => {
                         '';
-                    }}
-                >
+                    }}>
                     {sessionStorage.getItem('GdfToken') ? <div>
                         {
                             this.state.response == 200 ? '' : <Alert message="Invalid User Authorization"
-                                description="This is an error message about you are Unauthorized User"
+                                description={<p>This is an error message about you are Unauthorized User.
+                                    <a href={this.oauth2_url ? this.oauth2_url : ''} >
+                                        &nbsp; Authorize Again</a>
+                                </p>}
                                 type="error"
                                 showIcon closable />
                         }
 
-                        <Table dataSource={this.state.data} pagination={{ pageSize: 5, onChange: this.paginationChange }}>
+                        <Table dataSource={this.state.data} pagination={{ pageSize: 5, onChange: this.paginationChange() }}>
                             <Column title="Repository name" dataIndex="name" key="name" />
                             <Column title="Latest Commit Date" dataIndex="recent_commit_date" key="commit_date" />
                             <Column title="Commit Message" dataIndex="recent_commit_message" key="commit_message" />
-                            <Column title="" dataIndex="scan" key="scan" />
-                            <Column title="" dataIndex="report" key="report" />
+                            <Column title="" dataIndex="button" key="button" 
+                                render={(data, row) => 
+                                (
+                                    <div><Button href={'/report/'+row.name}>Scan</Button> <Button href={'/report/'+row.name}>Report</Button></div>
+                                )}/>
                             <Column title="Secu-level" dataIndex="secure_level"
                                 key="secure_level"
                                 render={le => (
