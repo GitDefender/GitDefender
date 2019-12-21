@@ -9,6 +9,7 @@ import 'antd/dist/antd.css'
 import RepoList from './component/repo-list';
 import LoginLayout from './component/LoginLayout';
 import { RegisterForm, LogIn, LogOut } from './component/authForm';
+import Report, {rere} from './component/report';
 
 const { Header, Content, Footer } = Layout;
 
@@ -41,10 +42,13 @@ class App extends Component {
               <Route path="/login" component={LoginLayout} />
               <Route path="/register" component={RegisterForm} />
               <Route path="/user" component={RepoList} />
+              <Route path="/report/:repo/:branch/:sha" component={Report} />
+              <Route path="/report" component={Report} />
+              
             </Switch>
           </BrowserRouter>
 
-          <div style={{ background: '#FFFFFF', padding: 24, minHeight: 280 }}>Content</div>
+          
         </Content>
 
         <Footer style={{ textAlign: 'center' }}>
