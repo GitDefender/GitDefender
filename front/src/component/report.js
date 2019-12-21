@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
     Layout, Typography, Descriptions, Card, Row, Col, Button,
-    Dropdown, Icon, Menu, Divider, Spin
+    Dropdown, Icon, Menu, Divider, Popover
 } from 'antd';
 import axios from 'axios';
 import { get_branch, get_commit, get_code_detect } from './api.js';
@@ -141,7 +141,7 @@ class Report extends Component {
                         <Row>
                             <Col span={24} offset={1} style={{ display:'flex', flexDirection:'row'}}>
                                 <div>
-                                세부사항 
+                                Detail
                                 </div>
                                 <div>
                                     &nbsp;&nbsp;
@@ -152,7 +152,11 @@ class Report extends Component {
                             <Col span={20} offset={2} style={{ background: '#f6f6f6', height:'70px', width:'400px', display:'flex', flexDirection:'row'}}>
                                 <div style={{fontSize:'10px' ,margin:'5px', paddingTop:'5px'}}>
                                     Line. 30&nbsp;&nbsp;&nbsp;&nbsp;var client_id = 'mndf5m4qeu';<br/>
-                                    Line. 31&nbsp;&nbsp;&nbsp;&nbsp;var client_secret = 'RDchLs9M6iW3RtkjP3GMOnz87H8Pmz7IXhBjNCqF';<br/>
+                                    <div>Line. 31&nbsp;&nbsp;&nbsp;&nbsp;var client_secret = 
+                                    <Popover content={<div><p>Use os.envrion instead of plain text code</p></div>}>
+                                        <a style={{color:'#DB0000'}}>'RDchLs9M6iW3RtkjP3GMOnz87H8Pmz7IXhBjNCqF';</a>
+                                    </Popover>
+                                    <br/></div>
                                     Line. 32&nbsp;&nbsp;&nbsp;&nbsp;var fs = require('fs');<br/>
                                 </div>
                             </Col>
@@ -160,7 +164,7 @@ class Report extends Component {
                         <Row>
                             <Col span={24} offset={1} style={{ display:'flex', flexDirection:'row'}}>
                                 <div>
-                                세부사항 
+                                Detail
                                 </div>
                                 <div>
                                     &nbsp;&nbsp;
@@ -171,7 +175,11 @@ class Report extends Component {
                             <Col span={20} offset={2} style={{ background: '#f6f6f6', height:'70px', width:'400px', display:'flex', flexDirection:'row'}}>
                                 <div style={{fontSize:'10px' ,margin:'5px', paddingTop:'5px'}}>
                                     Line. 30&nbsp;&nbsp;&nbsp;&nbsp;var client_id = 'mndf5m4qeu';<br/>
-                                    Line. 31&nbsp;&nbsp;&nbsp;&nbsp;var client_secret = 'RDchLs9M6iW3RtkjP3GMOnz87H8Pmz7IXhBjNCqF';<br/>
+                                    <div>Line. 31&nbsp;&nbsp;&nbsp;&nbsp;var client_secret = 
+                                    <Popover content={<div><p>Use os.envrion instead of plain text code</p></div>}>
+                                        <a style={{color:'#DB0000'}}>'RDchLs9M6iW3RtkjP3GMOnz87H8Pmz7IXhBjNCqF'; </a>
+                                    </Popover>
+                                    <br/></div>
                                     Line. 32&nbsp;&nbsp;&nbsp;&nbsp;var fs = require('fs');<br/>
                                 </div>
                             </Col>
@@ -186,7 +194,7 @@ class Report extends Component {
                         <Row>
                             <Col span={24} offset={1} style={{ display:'flex', flexDirection:'row'}}>
                                 <div>
-                                세부사항 
+                                Detail
                                 </div>
                                 <div>
                                     &nbsp;&nbsp;
@@ -197,7 +205,10 @@ class Report extends Component {
                             <Col span={20} offset={2} style={{ background: '#f6f6f6', height:'70px', width:'400px', display:'flex', flexDirection:'row'}}>
                                 <div style={{fontSize:'10px' ,margin:'5px', paddingTop:'5px'}}>
                                     Line. 276&nbsp;&nbsp;&nbsp;&nbsp;<br/>
-                                    Line. 277&nbsp;&nbsp;&nbsp;&nbsp;axios.get('http://221.231.10.7:3030')<br/>
+                                    <div>Line. 277&nbsp;&nbsp;&nbsp;&nbsp;axios.get(
+                                    <Popover content={<p>Is it IP that you intend?</p>}>
+                                    <a style={{color:'#DB0000'}}>'http://221.231.10.7:3030'</a>)</Popover><br/></div>
+                                    
                                     Line. 278&nbsp;&nbsp;&nbsp;&nbsp;.then( res => \<br/>
                                 </div>
                             </Col>
@@ -206,7 +217,7 @@ class Report extends Component {
                         <Row>
                             <Col span={24} offset={1} style={{ display:'flex', flexDirection:'row'}}>
                                 <div>
-                                세부사항 
+                                Detail
                                 </div>
                                 <div>
                                     &nbsp;&nbsp;
@@ -217,7 +228,9 @@ class Report extends Component {
                             <Col span={20} offset={2} style={{ background: '#f6f6f6', height:'70px', width:'400px', display:'flex', flexDirection:'row'}}>
                                 <div style={{fontSize:'10px' ,margin:'5px', paddingTop:'5px'}}>
                                     Line. 5&nbsp;&nbsp;&nbsp;&nbsp;[<br/>
-                                    Line. 6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'proxy' = 'pserver.hoho.co.kr',<br/>
+                                    <div>Line. 6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'proxy' = 
+                                    <Popover content={<p>Is it IP that you intend?</p>}>
+                                    <a style={{color:'#DB0000'}}>'pserver.hoho.co.kr'</a><br/></Popover></div>
                                     Line. 7&nbsp;&nbsp;&nbsp;&nbsp;]<br/>
                                 </div>
                             </Col>
@@ -226,7 +239,7 @@ class Report extends Component {
                         <Row>
                             <Col span={24} offset={1} style={{ display:'flex', flexDirection:'row'}}>
                                 <div>
-                                세부사항 
+                                Detail
                                 </div>
                                 <div>
                                     &nbsp;&nbsp;
@@ -237,7 +250,9 @@ class Report extends Component {
                             <Col span={20} offset={2} style={{ background: '#f6f6f6', height:'70px', width:'400px', display:'flex', flexDirection:'row'}}>
                                 <div style={{fontSize:'10px' ,margin:'5px', paddingTop:'5px'}}>
                                     Line. 191&nbsp;&nbsp;&nbsp;&nbsp;#*#*#*#*#*#<br/>
-                                    Line. 192&nbsp;&nbsp;&nbsp;&nbsp;Redirect to='http://11.101.253.7'<br/>
+                                    <div>Line. 192&nbsp;&nbsp;&nbsp;&nbsp;Redirect to=
+                                    <Popover content={<p>Is it IP that you intend?</p>}>
+                                    <a style={{color:'#DB0000'}}>'http://11.101.253.7'</a><br/></Popover></div>
                                     Line. 193&nbsp;&nbsp;&nbsp;&nbsp;#*#*#*#*#*#<br/>
                                 </div>
                             </Col>
@@ -251,18 +266,20 @@ class Report extends Component {
                         <Row>
                             <Col span={24} offset={1} style={{ display:'flex', flexDirection:'row'}}>
                                 <div>
-                                세부사항 
+                                Detail
                                 </div>
                                 <div>
                                     &nbsp;&nbsp;
-                                    e
+                                    /src/components/main/set.js
                                 </div>
                             </Col>
 
                             <Col span={20} offset={2} style={{ background: '#f6f6f6', height:'70px', width:'400px', display:'flex', flexDirection:'row'}}>
                                 <div style={{fontSize:'10px' ,margin:'5px', paddingTop:'5px'}}>
                                     Line. 5&nbsp;&nbsp;&nbsp;&nbsp;let b_pwd = sessionStorage('gfwg') <br/>
-                                    Line. 6&nbsp;&nbsp;&nbsp;&nbsp;//password default 11001100<br/>
+                                    <div>Line. 6&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <Popover content={<p>exposed password comment</p>}>
+                                    <a style={{color:'#DB0000'}}>//password default 11001100</a><br/></Popover></div>
                                     Line. 7&nbsp;&nbsp;&nbsp;&nbsp;<br/>
                                 </div>
                             </Col>
