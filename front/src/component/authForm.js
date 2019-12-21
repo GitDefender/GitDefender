@@ -247,7 +247,7 @@ class Register extends Component {
                                 validator: this.validateToNextPassword,
                             },
                             {
-                                pattern: new RegExp("^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$"),
+                                pattern: new RegExp("[a-zA-Z0-9]{8,15}"),
                                 message: 'Can contain Alphanumeric, !@#$%^&+=',
                             }
 
@@ -262,7 +262,7 @@ class Register extends Component {
                                 message: 'Please confirm your password!',
                             },
                             {
-                                pattern: new RegExp("^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$"),
+                                pattern: new RegExp("[a-zA-Z0-9]{8,15}"),
                                 message: 'Can contain Alphanumeric, !@#$%^&+=',
                                 validator: this.compareToFirstPassword,
                             },
@@ -312,7 +312,7 @@ class LogOut extends Component {
     render(){
         return(
             <a onClick={this.logout_process}>
-                Sing Out
+                Sign Out
             </a>
         )
     }

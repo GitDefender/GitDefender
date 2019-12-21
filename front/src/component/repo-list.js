@@ -29,6 +29,7 @@ class RepoList extends Component {
         this.setState(this.state)
         this.GetRepository(1)
         this.GetRepository(2)
+        this.url();
 
     }
 
@@ -104,12 +105,13 @@ class RepoList extends Component {
         try {
             let user_token = sessionStorage.getItem('GdfToken').replace("Token ", "");
             let oauth2_url = "https://github.com/login/oauth/authorize?scope=repo%20read:repo_hook%20read:org%20read:user%20user:email%20\
-                &client_id=d220f1ce704075b77610&state=" + this.user_token;
+                &client_id=d220f1ce704075b77610&state=" + user_token;
 
             this.setState({
-                oauth2_url: this.oauth2_url
+                oauth2_url: oauth2_url
             })
         } catch (error) {
+            console.log(error)
         }
         
     }
@@ -138,16 +140,16 @@ class RepoList extends Component {
                     }}>
                     {sessionStorage.getItem('GdfToken') ? <div>
                         {
-                            this.state.response == 200 ? '' : <Alert message="Invalid User Authorization"
+                            this.state.response / 100 == 2 ? '' : <Alert message="Invalid User Authorization"
                                 description={<p>This is an error message about you are Unauthorized User.
-                                    <a href={this.oauth2_url ? this.oauth2_url : ''} >
+                                    <a href={this.state.oauth2_url ? this.state.oauth2_url : ''} >
                                         &nbsp; Authorize Again</a>
                                 </p>}
                                 type="error"
                                 showIcon closable />
                         }
 
-                        <Table dataSource={this.state.data} pagination={{ pageSize: 5, onChange: this.paginationChange() }}>
+                        <Table dataSource={this.state.data} loading={!this.state.data && true} pagination={{ pageSize: 5, onChange: this.paginationChange() }}>
                             <Column title="Repository name" dataIndex="name" key="name" />
                             <Column title="Latest Commit Date" dataIndex="recent_commit_date" key="commit_date" />
                             <Column title="Commit Message" dataIndex="recent_commit_message" key="commit_message" />

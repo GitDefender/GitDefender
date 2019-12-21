@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Icon } from 'antd';
 import { Row, Col } from 'antd';
 
 import 'antd/dist/antd.css'
@@ -43,7 +43,7 @@ class App extends Component {
               <Route path="/register" component={RegisterForm} />
               <Route path="/user" component={RepoList} />
               <Route path="/report/:repo/:branch/:sha" component={Report} />
-              <Route path="/report" component={Report} />
+              <Route path="/report/:repo" component={Report} />
               
             </Switch>
           </BrowserRouter>
@@ -52,7 +52,7 @@ class App extends Component {
         </Content>
 
         <Footer style={{ textAlign: 'center' }}>
-          Footer Area
+        <Icon type="copyright" /> UginHack-GitDefender
     </Footer>
       </Layout>
     );
