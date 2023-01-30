@@ -1,0 +1,14 @@
+{
+  "SECRET_KEY": "<ENTER SECRET KEY>",
+  "DB": {
+    "ENGINE": "django.db.backends.sqlite3",
+    "NAME": "development",
+    "HOST": "localhost",
+    "USER": "root",
+    "PASSWORD": "",
+    "PORT": "10000"
+  },
+  "CLIENT_ID": "<ENTER YOUR CLIENT_ID>",
+  "CLIENT_SECRET": "<ENTER YOUR CLIENT_SECRET>",
+  "USER_AGENT": "<ENTER USER_AGENT YOU WANT>"
+}
